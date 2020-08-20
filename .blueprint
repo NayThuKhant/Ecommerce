@@ -1,0 +1,53 @@
+created:
+    - database/migrations/2020_08_19_181734_create_admins_table.php
+    - database/migrations/2020_08_19_181735_create_addresses_table.php
+    - database/migrations/2020_08_19_181736_create_categories_table.php
+    - database/migrations/2020_08_19_181737_create_products_table.php
+    - database/migrations/2020_08_19_181738_create_variants_table.php
+    - database/migrations/2020_08_19_181739_create_stocks_table.php
+    - database/migrations/2020_08_19_181740_create_carts_table.php
+    - database/migrations/2020_08_19_181741_create_orders_table.php
+    - database/migrations/2020_08_19_181742_create_packages_table.php
+    - database/migrations/2020_08_19_181743_create_items_table.php
+    - database/migrations/2020_08_19_181744_create_order_statuses_table.php
+    - database/migrations/2020_08_19_181745_create_cancellations_table.php
+    - database/migrations/2020_08_19_181745_create_category_product_table.php
+    - app/Models/Admin.php
+    - app/Models/Address.php
+    - app/Models/Category.php
+    - app/Models/Product.php
+    - app/Models/Variant.php
+    - app/Models/Stock.php
+    - app/Models/Cart.php
+    - app/Models/Order.php
+    - app/Models/Package.php
+    - app/Models/Item.php
+    - app/Models/OrderStatus.php
+    - app/Models/Cancellation.php
+    - database/factories/Models/AdminFactory.php
+    - database/factories/Models/AddressFactory.php
+    - database/factories/Models/CategoryFactory.php
+    - database/factories/Models/ProductFactory.php
+    - database/factories/Models/VariantFactory.php
+    - database/factories/Models/StockFactory.php
+    - database/factories/Models/CartFactory.php
+    - database/factories/Models/OrderFactory.php
+    - database/factories/Models/PackageFactory.php
+    - database/factories/Models/ItemFactory.php
+    - database/factories/Models/OrderStatusFactory.php
+    - database/factories/Models/CancellationFactory.php
+models:
+    Admin: { name: string, email: string, email_verified_at: 'datetime nullable', password: string, remember_token: 'string:100 nullable' }
+    User: { name: string, email: string, email_verified_at: 'datetime nullable', password: string, remember_token: 'string:100 nullable' }
+    Models\Admin: { name: string, email: string, email_verified_at: 'timestamp nullable', password: string, remember_token: 'string:100 nullable' }
+    Models\Address: { user_id: 'id foreign', full_name: string, phone: string, address: string, city: string, township: string, region: string }
+    Models\Category: { name: string, parent_id: 'int nullable default:0', lft: 'int default:0', rgt: 'int default:0', depth: 'int default:0', relationships: { belongsToMany: Product } }
+    Models\Product: { name: string, highlight: 'text nullable', description: 'text nullable', included: 'text nullable', relationships: { belongsToMany: Category, hasMany: 'Variant, Cart, Item', hasOne: Stock } }
+    Models\Variant: { product_id: 'id foreign', color_family: 'string nullable', photos: 'text nullable', SKU: 'string nullable', relationships: { hasMany: Item, hasOne: Stock } }
+    Models\Stock: { product_id: 'id foreign', variant_id: 'id foreign', quantity: unsignedInteger, is_available: boolean, sale_price: double, special_price: 'double nullable', shipping_fee_multiplier: 'double default:1', relationships: { hasMany: Cart } }
+    Models\Cart: { user_id: 'id foreign', product_id: 'id foreign', variant_id: 'id foreign', quantity: unsignedInteger }
+    Models\Order: { payment_method: string, subtotal: double, shipping_fee: double, discount: double, relationships: { hasMany: Package, hasOne: OrderStatus } }
+    Models\Package: { order_id: 'id foreign', relationships: { hasMany: Item } }
+    Models\Item: { package_id: 'id foreign', product_id: 'id foreign', variant_id: 'id foreign', quantity: unsignedInteger }
+    Models\OrderStatus: { order_id: 'id foreign', paid_at: 'timestamp nullable', confirmed_at: 'timestamp nullable', processed_at: 'timestamp nullable', shipped_at: 'timestamp nullable', delivered_at: 'timestamp nullable' }
+    Models\Cancellation: { order_id: 'id foreign', cancelled_at: timestamp, reason: string }
