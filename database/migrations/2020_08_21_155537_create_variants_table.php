@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStocksTable extends Migration
+class CreateVariantsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,16 @@ class CreateStocksTable extends Migration
      */
     public function up()
     {
-        Schema::create('stocks', function (Blueprint $table) {
+        Schema::create('variants', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('variant_id')->constrained()->cascadeOnDelete();
+            $table->string('color_family')->nullable();
+            $table->text('photos')->nullable();
+            $table->string('SKU')->nullable();
             $table->unsignedInteger('quantity');
             $table->boolean('is_available');
             $table->double('sale_price');
-            $table->double('special_price')->nullable();
+            $table->double('special_price')->default(0);
             $table->double('shipping_fee_multiplier')->default(1);
             $table->timestamps();
         });
@@ -33,6 +35,6 @@ class CreateStocksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stocks');
+        Schema::dropIfExists('variants');
     }
 }

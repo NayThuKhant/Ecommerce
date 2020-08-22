@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Order;
 use App\Models\Post;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -42,5 +43,9 @@ class User extends Authenticatable
     public function posts()
     {
         return $this->hasMany(Post::class);
+    }
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
     }
 }

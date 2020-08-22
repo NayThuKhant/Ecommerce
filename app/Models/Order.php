@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\User;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
+    use CrudTrait;
     /**
      * The attributes that are mass assignable.
      *
@@ -31,13 +34,17 @@ class Order extends Model
     ];
 
 
-    public function packages()
+    public function items()
     {
-        return $this->hasMany(\App\Models\Package::class);
+        return $this->hasMany(\App\Models\Item::class);
     }
 
     public function orderStatus()
     {
         return $this->hasOne(\App\Models\OrderStatus::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

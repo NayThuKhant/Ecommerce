@@ -12,7 +12,7 @@ class Item extends Model
      * @var array
      */
     protected $fillable = [
-        'package_id',
+        'order_id',
         'product_id',
         'variant_id',
         'quantity',
@@ -25,16 +25,16 @@ class Item extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'package_id' => 'integer',
+        'order_id' => 'integer',
         'product_id' => 'integer',
         'variant_id' => 'integer',
         'quantity' => 'integer',
     ];
 
 
-    public function package()
+    public function order()
     {
-        return $this->belongsTo(\App\Models\Package::class);
+        return $this->belongsTo(\App\Models\Order::class);
     }
 
     public function product()

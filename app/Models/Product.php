@@ -18,6 +18,7 @@ class Product extends Model
         'highlight',
         'description',
         'included',
+        'featured_photo',
     ];
 
     /**
@@ -48,10 +49,5 @@ class Product extends Model
     public function items()
     {
         return $this->hasMany(\App\Models\Item::class);
-    }
-
-    public function stocks()
-    {
-        return $this->hasMany(\App\Models\Stock::class);
     }
 }

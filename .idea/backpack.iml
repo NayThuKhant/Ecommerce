@@ -11,6 +11,8 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/backpack/generators" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/barryvdh/elfinder-flysystem-driver" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/barryvdh/laravel-elfinder" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/cocur/slugify" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/cviebrock/eloquent-sluggable" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/intervention/image" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/laracasts/generators" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/laravel-shift/blueprint" />
