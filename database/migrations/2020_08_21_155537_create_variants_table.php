@@ -16,15 +16,17 @@ class CreateVariantsTable extends Migration
         Schema::create('variants', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id')->constrained()->cascadeOnDelete();
+            $table->string('name');
             $table->string('color_family')->nullable();
             $table->text('photos')->nullable();
             $table->string('SKU')->nullable();
-            $table->unsignedInteger('quantity');
+            $table->unsignedInteger('stocks');
             $table->boolean('is_available');
             $table->double('sale_price');
             $table->double('special_price')->default(0);
             $table->double('shipping_fee_multiplier')->default(1);
             $table->timestamps();
+            $table->timestamp('deleted_at')->nullable();
         });
     }
 

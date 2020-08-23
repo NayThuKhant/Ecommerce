@@ -13,9 +13,6 @@ class Cart extends Model
      */
     protected $fillable = [
         'user_id',
-        'product_id',
-        'variant_id',
-        'quantity',
     ];
 
     /**
@@ -26,9 +23,6 @@ class Cart extends Model
     protected $casts = [
         'id' => 'integer',
         'user_id' => 'integer',
-        'product_id' => 'integer',
-        'variant_id' => 'integer',
-        'quantity' => 'integer',
     ];
 
 
@@ -42,8 +36,8 @@ class Cart extends Model
         return $this->belongsTo(\App\Models\Product::class);
     }
 
-    public function variant()
+    public function variants()
     {
-        return $this->belongsTo(\App\Models\Variant::class);
+        return $this->belongsToMany(\App\Models\Variant::class);
     }
 }

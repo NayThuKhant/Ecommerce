@@ -27,39 +27,45 @@ models:
     highlight: text nullable
     description: text nullable
     included: text nullable
-    featured_photo: string default:"images/default_featured.png"
+    featured_photo: string nullable
+    deleted_at: timestamp nullable
     relationships:
       belongsToMany: Category
       hasMany: Variant, Cart, Item
   Models\Variant:
     product_id: id foreign
-    color_family: string nullable
+    name: string
     photos: text nullable
     SKU: string nullable
-    quantity: unsignedInteger
+    stocks: unsignedInteger
     is_available: boolean
     sale_price: double
     special_price: double default:0
     shipping_fee_multiplier: double default:1
+    deleted_at: timestamp nullable
     relationships:
       hasMany: Item, Cart
+      belongsToMany: Cart
   Models\Cart:
     user_id: id foreign
-    product_id: id foreign
-    variant_id: id foreign
-    quantity: unsignedInteger
+    relationships:
+      belongsToMany: Variant
   Models\Order:
     payment_method: string
     subtotal: double
     shipping_fee: double
     discount: double
+    total: double
     relationships:
       hasMany: Item
       hasOne: OrderStatus
   Models\Item:
     order_id: id foreign
-    product_id: id foreign
     variant_id: id foreign
+    name: string
+    SKU: string nullable
+    featured_photo: string nullable
+    price: double
     quantity: unsignedInteger
   Models\OrderStatus:
     order_id: id foreign
