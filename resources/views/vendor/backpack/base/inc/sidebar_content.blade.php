@@ -8,3 +8,8 @@
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('voucher') }}'><i class="nav-icon las la-money-check-alt"></i> Vouchers</a></li>
 <li class="nav-title">EXTRA</li>
 <li class="nav-item"><a class="nav-link" href="{{ backpack_url('elfinder') }}\"><i class="nav-icon la la-files-o"></i> <span>{{ trans('backpack::crud.file_manager') }}</span></a></li>
+<<<<<<< HEAD
+
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('stock') }}'><i class='nav-icon la la-question'></i> Stocks</a></li>
+=======
+>>>>>>> 88a910b88abc8ea59bc44c60589fa7cf052df4af

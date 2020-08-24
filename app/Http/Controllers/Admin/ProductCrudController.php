@@ -191,7 +191,6 @@ class ProductCrudController extends CrudController
     }
 
 
-
     public function store()
     {
         $this->crud->hasAccessOrFail('create');
@@ -267,5 +266,6 @@ class ProductCrudController extends CrudController
         return $this->crud->performSaveAction($product->getKey());
     }
 
-
 }
+
+
