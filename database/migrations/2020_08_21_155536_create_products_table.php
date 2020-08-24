@@ -17,10 +17,12 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('name');
             $table->text('highlight')->nullable();
-            $table->text('description')->nullable();
+            $table->text('description');
             $table->text('included')->nullable();
-            $table->string('featured_photo')->default("images/default_featured.png");
+            $table->string('featured_photo')->nullable();
+            $table->boolean('is_active')->default(1);
             $table->timestamps();
+            $table->timestamp('deleted_at')->nullable();
         });
     }
 

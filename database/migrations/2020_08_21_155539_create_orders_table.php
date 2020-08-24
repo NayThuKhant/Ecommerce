@@ -20,6 +20,7 @@ class CreateOrdersTable extends Migration
             $table->double('subtotal');
             $table->double('shipping_fee');
             $table->double('discount');
+            $table->double('total');
             $table->timestamps();
         });
     }

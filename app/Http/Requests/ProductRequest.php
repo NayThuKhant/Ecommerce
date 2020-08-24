@@ -46,13 +46,15 @@ class ProductRequest extends FormRequest
                 foreach ($variant_groups as $variant_group)
                 {
                     $vaildator = Validator::make($variant_group, [
+                        'name' => 'required|string|max:255',
                         'color_family' => 'required|string',
                         'photos' => 'string',
                         "SKU" => 'required',
-                        'quantity' => 'required|integer|min:0',
+                        'stocks' => 'required|integer|min:0',
                         'is_available' => 'required|boolean',
                         'sale_price' => 'required|numeric|min:1',
-                        'special_price' => 'required|numeric|min:0'
+                        'special_price' => 'required|numeric|min:0',
+                        'shipping_fee_multiplier' => 'required|integer|min:0',
                     ], $this->messages(), $this->attributes());
 
                     if ($vaildator->fails())

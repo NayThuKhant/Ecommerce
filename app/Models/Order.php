@@ -19,6 +19,7 @@ class Order extends Model
         'subtotal',
         'shipping_fee',
         'discount',
+        'total'
     ];
 
     /**

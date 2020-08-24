@@ -16,6 +16,9 @@ class Item extends Model
         'product_id',
         'variant_id',
         'quantity',
+        'featured_photo',
+        'SKU',
+        'price'
     ];
 
     /**

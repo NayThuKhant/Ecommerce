@@ -54,11 +54,13 @@ class ProductCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::column('id')->label("ID");
         CRUD::column('name');
         CRUD::column('variants')->type('relationship_count');
         CRUD::column('featured_photo')->label('Photo')->type('image');
-        CRUD::column('updated_at')->label("Last Updated");
+        CRUD::column('total_stocks');
+        CRUD::column('is_active')->label('Active')->type('check');
+        CRUD::column('is_visible')->type('check')->label('Visible');
+        CRUD::column('updated_at')->label("Last Updated")->type('datetime');
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -92,35 +94,42 @@ class ProductCrudController extends CrudController
 //            'ajax' => true,
             'inline_create' => [ 'entity' => 'category'],
         ]);
-
+        CRUD::field('is_active')->type('checkbox')->label('Active');
         $this->crud->addField([
             'name' => 'variants',
             'label' => 'Variants',
             'type' => 'repeatable',
             'fields' => [
                 [
+                    'name' => 'name',
+                    'type' => 'text',
+                    'label' => 'Name',
+                    'wrapper' => ["class" => "form-group col-md-6"]
+                ],
+                [
                     'name' => 'color_family',
                     'type' => 'text',
                     'label' => 'Color Family',
-                    'wrapper' => ["class" => "form-group col-md-4"]
+                    'wrapper' => ["class" => "form-group col-md-6"]
                 ],
                 [
                     'name' => 'SKU',
                     'type' => 'text',
                     'label' => 'SKU',
-                    'wrapper' => ["class" => "form-group col-md-4"]
+                    'wrapper' => ["class" => "form-group col-md-6"]
                 ],
                 [
-                    'name' => 'quantity',
+                    'name' => 'stocks',
                     'type' => 'number',
-                    'label' => 'Quantity',
-                    'wrapper' => ["class" => "form-group col-md-4"]
+                    'label' => 'Stocks Available',
+                    'wrapper' => ["class" => "form-group col-md-6"]
                 ],
                 [
                     'name' => 'is_available',
                     'label' => 'Available',
                     'default' => 1,
-                    'type' => 'checkbox'
+                    'type' => 'checkbox',
+
                 ],
                 [
                     'name' => 'sale_price',

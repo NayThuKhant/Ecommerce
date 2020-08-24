@@ -17,8 +17,9 @@ class Variant extends Model
         'product_id',
         'color_family',
         'photos',
+        'name',
         'SKU',
-        'quantity',
+        'stocks',
         'is_available',
         'sale_price',
         'special_price',
@@ -44,7 +45,7 @@ class Variant extends Model
 
     public function carts()
     {
-        return $this->hasMany(\App\Models\Cart::class);
+        return $this->belongsToMany(\App\Models\Cart::class);
     }
 
     public function product()

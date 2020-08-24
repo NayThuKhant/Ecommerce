@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-<<<<<<< HEAD
-=======
-  <component name="AutoImportSettings">
-    <option name="autoReloadType" value="SELECTIVE" />
-  </component>
->>>>>>> 88a910b88abc8ea59bc44c60589fa7cf052df4af
   <component name="BranchesTreeState">
     <expand>
       <path>
@@ -26,6 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d3f0e494-54e9-4a2f-85fb-3e7fc8b24d2e" name="Default Changelist" comment="">
+<<<<<<< HEAD
 <<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/ProductCrudController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/ProductCrudController.php" afterDir="false" />
@@ -51,47 +46,35 @@
       <change beforePath="$PROJECT_DIR$/.blueprint" beforeDir="false" afterPath="$PROJECT_DIR$/.blueprint" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/backpack.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/backpack.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+=======
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/VoucherCrudController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Requests/VoucherRequest.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Models/Voucher.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2020_08_22_153047_create_vouchers_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/vendor/backpack/crud/fields/dependent_voucher_input.blade.php" afterDir="false" />
+>>>>>>> 85ad66d00114b3b7b0532fce0721a2c5b543d3b5
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/CategoryCrudController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/CategoryCrudController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/OrderCrudController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/OrderCrudController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/ProductCrudController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/ProductCrudController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/StockCrudController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/CategoryRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/CategoryRequest.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Requests/ProductRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/ProductRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/StockRequest.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Category.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Category.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Cart.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Cart.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/Item.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Item.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/Order.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Order.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Package.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/Product.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Product.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Stock.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/Variant.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Variant.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/Models/ItemFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/Models/ItemFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/Models/PackageFactory.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/Models/ProductFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/Models/ProductFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/Models/StockFactory.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/Models/VariantFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/Models/VariantFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_08_19_181734_create_admins_table.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_08_19_181735_create_addresses_table.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_08_19_181736_create_categories_table.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_08_19_181737_create_products_table.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_08_19_181738_create_variants_table.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_08_19_181739_create_stocks_table.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_08_19_181740_create_carts_table.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_08_19_181741_create_orders_table.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_08_19_181742_create_packages_table.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_08_19_181743_create_items_table.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_08_19_181744_create_order_statuses_table.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_08_19_181745_create_cancellations_table.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_08_19_181745_create_category_product_table.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/backpack/base.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/backpack/base.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_08_21_155536_create_products_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_08_21_155536_create_products_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_08_21_155537_create_variants_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_08_21_155537_create_variants_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_08_21_155538_create_carts_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_08_21_155538_create_carts_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_08_21_155539_create_orders_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_08_21_155539_create_orders_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_08_21_155540_create_items_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_08_21_155540_create_items_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/draft.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/draft.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/vendor/backpack/base/inc/sidebar_content.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/vendor/backpack/base/inc/sidebar_content.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/backpack/custom.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/backpack/custom.php" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
 >>>>>>> 88a910b88abc8ea59bc44c60589fa7cf052df4af
+=======
+>>>>>>> 85ad66d00114b3b7b0532fce0721a2c5b543d3b5
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -257,13 +240,14 @@
 >>>>>>> 88a910b88abc8ea59bc44c60589fa7cf052df4af
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
-    <property name="settings.editor.selected.configurable" value="php.test.frameworks.configurable" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Laravel\khantzawhein\ecommerce" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\shared_f_homestead\code\backpack\app\Models" />
       <recent name="F:\shared_f_homestead\code\backpack\resources\views\vendor\backpack\crud" />
       <recent name="F:\shared_f_homestead\code\backpack\resources\views\custom" />
       <recent name="F:\shared_f_homestead\code\backpack\app" />
@@ -334,7 +318,11 @@
       <workItem from="1597897442218" duration="909000" />
       <workItem from="1597908766268" duration="2740000" />
       <workItem from="1598011231561" duration="26127000" />
+<<<<<<< HEAD
 >>>>>>> 88a910b88abc8ea59bc44c60589fa7cf052df4af
+=======
+      <workItem from="1598103274960" duration="17098000" />
+>>>>>>> 85ad66d00114b3b7b0532fce0721a2c5b543d3b5
     </task>
     <servers />
   </component>
@@ -397,9 +385,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1921" height="298" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1598043609452" />
-    <state x="461" y="164" key="SettingsEditor" timestamp="1598037714534">
+    <state x="461" y="164" key="SettingsEditor" timestamp="1598103420746">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
+<<<<<<< HEAD
 <<<<<<< HEAD
     <state x="461" y="164" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1597838671665" />
     <state x="346" y="182" width="672" height="538" key="search.everywhere.popup" timestamp="1598102598554">
@@ -409,14 +398,17 @@
     <state x="433" y="230" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1597769795132" />
 =======
     <state x="461" y="164" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1598037714534" />
+=======
+    <state x="461" y="164" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1598103420746" />
+>>>>>>> 85ad66d00114b3b7b0532fce0721a2c5b543d3b5
     <state x="692" y="263" key="com.jetbrains.php.test.PhpNewTestDialog" timestamp="1598035207183">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="692" y="263" key="com.jetbrains.php.test.PhpNewTestDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1598035207183" />
-    <state x="433" y="230" width="672" height="678" key="search.everywhere.popup" timestamp="1598042975534">
+    <state x="433" y="230" width="672" height="678" key="search.everywhere.popup" timestamp="1598128854907">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="433" y="230" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1598042975534" />
+    <state x="433" y="230" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1598128854907" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
