@@ -24,11 +24,8 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
-<<<<<<< HEAD
         "firebase": "^7.19.0",
-        "firebaseui": "^4.6.1"
-=======
+        "firebaseui": "^4.6.1",
         "tailwindcss": "^1.7.3"
->>>>>>> 05843f4c811bb38743104cc5fc6669fca8d44b3b
     }
 }
