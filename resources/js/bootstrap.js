@@ -25,7 +25,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
- * for events that are broadcast by Laravel. Echo and event broadcasting
+ * for events that are broadcast by Laravel. Echo and event broadc  asting
  * allows your team to easily build robust real-time web applications.
  */
 
@@ -39,3 +39,24 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+import firebase from 'firebase/app'
+import 'firebase/auth'
+import 'firebase/firestore'
+import * as firebaseui from 'firebaseui'
+
+const firebaseConfig = {
+    apiKey: "AIzaSyCVSJ6kY3zDYJqr9U-l4LvJWI1t9iH1waA",
+    authDomain: "ecommerce-eb28f.firebaseapp.com",
+    databaseURL: "https://ecommerce-eb28f.firebaseio.com",
+    projectId: "ecommerce-eb28f",
+    storageBucket: "ecommerce-eb28f.appspot.com",
+    messagingSenderId: "1001703752196",
+    appId: "1:1001703752196:web:2f0983b00f622f0c70eb51"
+};
+firebase.initializeApp(firebaseConfig);
+window.firebase = firebase
+window.auth = firebase.auth();
+window.firebaseui = firebaseui;
+
+// console.log('firebase file called')
+// firebase.analytics();

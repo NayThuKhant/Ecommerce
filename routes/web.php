@@ -17,7 +17,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+Route::post('/login-firebase', 'Auth\LoginController@firebaseLogin');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
