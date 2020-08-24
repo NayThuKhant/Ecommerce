@@ -11,5 +11,6 @@ $factory->define(Product::class, function (Faker $faker) {
         'highlight' => $faker->text,
         'description' => $faker->text,
         'included' => $faker->text,
+        'featured_photo' => $faker->text,
     ];
 });

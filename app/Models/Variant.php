@@ -18,6 +18,11 @@ class Variant extends Model
         'color_family',
         'photos',
         'SKU',
+        'quantity',
+        'is_available',
+        'sale_price',
+        'special_price',
+        'shipping_fee_multiplier',
     ];
 
     /**
@@ -28,7 +33,7 @@ class Variant extends Model
     protected $casts = [
         'id' => 'integer',
         'product_id' => 'integer',
-        'photos' => 'array'
+        'quantity' => 'integer',
     ];
 
 
@@ -37,9 +42,9 @@ class Variant extends Model
         return $this->hasMany(\App\Models\Item::class);
     }
 
-    public function stock()
+    public function carts()
     {
-        return $this->hasOne(\App\Models\Stock::class);
+        return $this->hasMany(\App\Models\Cart::class);
     }
 
     public function product()

@@ -15,6 +15,7 @@ models:
     region: string
   Models\Category:
     name: string
+    slug: string
     parent_id: int nullable default:0
     lft: int default:0
     rgt: int default:0
@@ -26,27 +27,22 @@ models:
     highlight: text nullable
     description: text nullable
     included: text nullable
+    featured_photo: string default:"images/default_featured.png"
     relationships:
       belongsToMany: Category
-      hasMany: Variant, Cart, Item, Stock
+      hasMany: Variant, Cart, Item
   Models\Variant:
     product_id: id foreign
     color_family: string nullable
     photos: text nullable
     SKU: string nullable
-    relationships:
-      hasMany: Item
-      hasOne: Stock
-  Models\Stock:
-    product_id: id foreign
-    variant_id: id foreign
     quantity: unsignedInteger
     is_available: boolean
     sale_price: double
-    special_price: double nullable
+    special_price: double default:0
     shipping_fee_multiplier: double default:1
     relationships:
-      hasMany: Cart
+      hasMany: Item, Cart
   Models\Cart:
     user_id: id foreign
     product_id: id foreign
@@ -58,14 +54,10 @@ models:
     shipping_fee: double
     discount: double
     relationships:
-      hasMany: Package
-      hasOne: OrderStatus
-  Models\Package:
-    order_id: id foreign
-    relationships:
       hasMany: Item
+      hasOne: OrderStatus
   Models\Item:
-    package_id: id foreign
+    order_id: id foreign
     product_id: id foreign
     variant_id: id foreign
     quantity: unsignedInteger
@@ -83,3 +75,7 @@ models:
 
 controllers:
   # ...
+
+
+
+
