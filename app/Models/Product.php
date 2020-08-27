@@ -31,6 +31,9 @@ class Product extends Model
     protected $casts = [
         'id' => 'integer'
     ];
+    protected $appends = [
+        'min_price'
+    ];
 
 
     public function is_any_vari_available()
@@ -51,6 +54,26 @@ class Product extends Model
             return true;
         }
         return false;
+    }
+    public function getMinPriceAttribute()
+    {
+        $variants = $this->variants()->select('sale_price', 'special_price')->get();
+        $min = $variants[0]->sale_price ?? 0;
+        foreach ($variants as $variant)
+        {
+            if ($variant->sale_price < $min || $variant->special_price < $min)
+            {
+                if ($variant->special_price != 0 )
+                {
+                    $min = $variant->special_price;
+                }
+                else
+                {
+                    $min = $variant->sale_price;
+                }
+            }
+        }
+        return $min;
     }
 
 
