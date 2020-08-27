@@ -198,7 +198,6 @@ class ProductCrudController extends CrudController
         // execute the FormRequest authorization and validation, if one is required
         $request = $this->crud->validateRequest();
         $strippedReq = $this->crud->getStrippedSaveRequest();
-
         //Create Product
         $product = $this->crud->create($strippedReq);
         $this->data['entry'] = $this->crud->entry = $product;
@@ -209,7 +208,8 @@ class ProductCrudController extends CrudController
             $product->categories()->sync([]);
         }
         else {
-            $product->categories()->sync([$strippedReq['categories']]);
+
+            $product->categories()->sync($strippedReq['categories']);
         }
 
         //Add Variants to it.
@@ -243,7 +243,7 @@ class ProductCrudController extends CrudController
             $product->categories()->sync([]);
         }
         else {
-            $product->categories()->sync([$strippedReq['categories']]);
+            $product->categories()->sync($strippedReq['categories']);
         }
         //Add Variants to it.
         $variant_groups = collect(json_decode($request->variants, true));
