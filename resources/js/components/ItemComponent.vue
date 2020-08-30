@@ -2,7 +2,7 @@
     <div class="p-4 max-w-sm w-1/4">
         <div class="rounded overflow-hidden border border-gray-300 transition-ease  hover:shadow-xl">
             <a href="#" class="flex justify-center" style="height: 220px;">
-                <img :src="product.featured_photo" :alt="product.name" class="w-auto max-w-full h-full">
+                <img :src="`/${product.featured_photo}`" :alt="product.name" class="w-auto max-w-full h-full">
             </a>
             <div class="px-6 py-4">
                 <a href="">

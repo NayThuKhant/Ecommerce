@@ -1,11 +1,8 @@
 <template>
     <div>
-        <spinner-component v-if="!this.$store.state.loaded"/>
-        <div v-show="this.$store.state.loaded">
+        <div>
             <navbar-component></navbar-component>
-            <menubar-component></menubar-component>
-            <banner-component></banner-component>
-            <product-component></product-component>
+            <router-view></router-view>
         </div>
     </div>
 </template>
@@ -13,6 +10,25 @@
 <script>
 export default {
     name: "master",
+    data() {
+        return {
+            user: {}
+        }
+    },
+    mounted() {
+        this.fetchCurrentUser();
+    },
+    methods: {
+        fetchCurrentUser() {
+            axios.get('/api/user')
+            .then(({data}) => {
+                this.$store.commit('setCurrentUser', data)
+            })
+            .catch((error) => {
+                console.log(error.message)
+            })
+        }
+    }
 }
 </script>
 

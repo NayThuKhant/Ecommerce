@@ -28,7 +28,7 @@ export default {
                                 idToken
                             })
                             .then((response) => {
-                                window.location.replace('/home')
+                                window.location.replace('/')
                             })
                             .catch((e) => {
                                 console.log(e)

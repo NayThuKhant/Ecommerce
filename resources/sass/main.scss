@@ -30,3 +30,12 @@ html {
 .transition-ease {
     @apply transition-all duration-500 ease-out;
 }
+.categories ul li:hover ul{
+    display: block;
+}
+.search-item {
+    @apply py-1 px-2 border-b border-gray-300 block text-sm;
+}
+.search-item:hover {
+    @apply bg-gray-300;
+}

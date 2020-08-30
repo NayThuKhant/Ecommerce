@@ -1,24 +1,19 @@
 <template>
-    <section class="bg-gray-100">
+    <section class="bg-gray-900">
         <div class="container mx-auto py-12">
             <div class="flex content-between">
-                <div class="w-1/4 mr-5">
-                    <ul class="rounded bg-white">
-                        <a href="">
-                            <li class="py-3 border-b border-gray-300 px-3 hover:bg-gray-100">Clothes</li>
-                        </a>
-                        <a href="">
-                            <li class="py-3 border-b border-gray-300 px-3 hover:bg-gray-100">Automobiles</li>
-                        </a>
-                        <a href="">
-                            <li class="py-3 border-b border-gray-300 px-3 hover:bg-gray-100">Home Interior</li>
-                        </a>
-                        <li class="py-3 border-b border-gray-300 px-3 hover:bg-gray-100"><a href="#">Electronics</a>
+                <div class="w-1/4 mr-5 categories">
+                    <ul class="rounded bg-white relative">
+                        <li class="py-3 border-b border-gray-300 px-3 hover:bg-gray-100" v-for="category in firstCategories">
+                            <router-link :to="{ name: 'category', params: { slug: category.slug }}" class="block">{{ category.name }}</router-link>
                         </li>
-                        <li class="py-3 border-b border-gray-300 px-3 hover:bg-gray-100"><a href="#">Technologies</a>
+                        <li class="py-3 px-4" v-if="secondCategories.length != 0">More
+                            <ul class="hidden rounded bg-white shadow w-full absolute top-0 h-full" style="left: 100%">
+                                <li class="py-3 border-b border-gray-300 px-3 hover:bg-gray-100" v-for="category in secondCategories">
+                                    <a href="#" class="block">{{ category.name }}</a>
+                                </li>
+                            </ul>
                         </li>
-                        <li class="py-3 border-b border-gray-300 px-3 hover:bg-gray-100"><a href="#">Digital</a></li>
-                        <li class="py-3 px-4"><a href="#">More</a></li>
                     </ul>
                 </div>
                 <img src="images/banner.jpg" class="rounded" alt="Banner">
@@ -29,7 +24,37 @@
 
 <script>
 export default {
-    name: "BannerComponent"
+    name: "BannerComponent",
+    data(){
+        return {
+            categories: []
+        }
+    },
+    mounted() {
+        this.fetchCategories();
+    },
+    methods:{
+        fetchCategories() {
+            axios.get('/api/categories')
+            .then(({data}) => {
+                this.categories = data
+            })
+            .catch((errors) => {
+                console.log(errors.message)
+            })
+        }
+    },
+    computed:{
+        firstCategories() {
+            return this.categories.slice(0,6)
+        },
+        secondCategories() {
+            return this.categories.slice(6)
+        }
+
+
+    }
+
 }
 </script>
 

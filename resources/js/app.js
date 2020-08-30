@@ -10,7 +10,7 @@ files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(
 Vue.component('master', require('./views/master.vue').default);
 
 
-const Router = new VueRouter({
+const router = new VueRouter({
     mode: 'history',
     routes: Routes
 })
@@ -18,7 +18,8 @@ const Router = new VueRouter({
 Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
-        loaded: false
+        loaded: false,
+        user: {}
     },
     mutations: {
         setAsLoaded(state) {
@@ -26,6 +27,9 @@ const store = new Vuex.Store({
         },
         setAsNotLoaded(state) {
             state.loaded = false
+        },
+        setCurrentUser(state, user) {
+            state.user = user
         }
     }
 })
@@ -34,6 +38,6 @@ Vue.use(VueRouter)
 const app = new Vue({
     el: '#app',
     store,
-    Router,
+    router
 
 });

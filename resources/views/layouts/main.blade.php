@@ -8,6 +8,14 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Styles -->
+    <link rel="stylesheet" href="{{ asset('css/spinner.css') }}">
+    <script>
+        document.onreadystatechange = function () {
+            if (document.readyState === "complete") {
+                document.querySelector("#spinner").style.display = "none"
+            }
+        }
+    </script>
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     <!-- Firebase UI CSS -->
     <link rel="stylesheet" href="{{ asset('packages/line-awesome/css/line-awesome.min.css') }}">
@@ -16,6 +24,7 @@
     <title>E-Commerce</title>
 </head>
 <body>
+    <x-spinner></x-spinner>
     <section id="app">
         @yield('content')
     </section>
