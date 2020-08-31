@@ -62,3 +62,8 @@ html {
 .form-input:disabled {
     @apply cursor-not-allowed bg-gray-400;
 }
+//product.show tab in app.js
+.is-active{
+    color: red;
+    border-bottom: red 1px solid;
+}

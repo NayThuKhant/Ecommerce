@@ -52,13 +52,14 @@ import 'firebase/firestore'
 import * as firebaseui from 'firebaseui'
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCVSJ6kY3zDYJqr9U-l4LvJWI1t9iH1waA",
-    authDomain: "ecommerce-eb28f.firebaseapp.com",
-    databaseURL: "https://ecommerce-eb28f.firebaseio.com",
-    projectId: "ecommerce-eb28f",
-    storageBucket: "ecommerce-eb28f.appspot.com",
-    messagingSenderId: "1001703752196",
-    appId: "1:1001703752196:web:2f0983b00f622f0c70eb51"
+  apiKey: "AIzaSyBQAK_dBTbGOlC6piJD99IXlqJGWPeOmHk",
+  authDomain: "ecommerce-ntk.firebaseapp.com",
+  databaseURL: "https://ecommerce-ntk.firebaseio.com",
+  projectId: "ecommerce-ntk",
+  storageBucket: "ecommerce-ntk.appspot.com",
+  messagingSenderId: "1021944174697",
+  appId: "1:1021944174697:web:eb42d4779b9b18e105eaf8",
+  measurementId: "G-8WZ2636QCR"
 };
 firebase.initializeApp(firebaseConfig);
 window.firebase = firebase

@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::namespace('API')->group(function () {
-    Route::middleware('auth:sanctum')->group(function() {
+    Route::middleware('auth:sanctum')->group(function () {
         Route::post('/update-info', 'UserController@updateInfo');
     });
     Route::get('/products', 'ProductController@index');
@@ -25,7 +25,11 @@ Route::namespace('API')->group(function () {
     Route::get('/user', 'UserController@getUser');
     Route::get('categories', 'CategoryController@index');
     Route::get('categories/{slug}', 'CategoryController@getProducts');
+    Route::get('products/{product}/variants', function ($id) {
+        return Product::with('variants', 'categories')->whereId($id)->first();
+    });
 });
+
 
 
 
