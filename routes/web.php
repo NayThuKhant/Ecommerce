@@ -18,7 +18,7 @@ Route::post('/login-firebase', 'Auth\LoginController@firebaseLogin');
 
 Route::get('/{any?}', function () {
     return view('main-spa');
-})->where('any', '.*');
+})->where('any', '.*')->middleware('more_info_needed');
 //
 
 //

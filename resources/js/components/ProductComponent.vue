@@ -1,6 +1,6 @@
 <template>
     <div>
-        <section v-show="this.$store.state.loaded" class="container mx-auto py-4 bg-white mt-3">
+        <section v-show="loaded" class="container mx-auto py-4 bg-white mt-3">
         <div class="heading flex justify-between items-center">
             <h3 class="font-bold text-3xl">Latest Products</h3>
             <button class="btn btn-indigo">See all</button>
@@ -18,10 +18,10 @@ export default {
     data() {
         return {
             products: [],
+            loaded: false
         }
     },
     mounted() {
-        this.$store.commit('setAsNotLoaded')
         this.fetchProduct()
     },
     methods: {
@@ -29,7 +29,7 @@ export default {
             axios.get('/api/products')
             .then(({data}) => {
                 this.products = data
-                this.$store.commit('setAsLoaded')
+                this.loaded = true
             })
             .catch(error => {
                 console.log(error.message)

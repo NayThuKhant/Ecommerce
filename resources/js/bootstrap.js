@@ -9,9 +9,14 @@ window._ = require('lodash');
 try {
     window.Popper = require('popper.js').default;
     window.$ = window.jQuery = require('jquery');
-
+    window.toastr = require('toastr')
     require('bootstrap');
 } catch (e) {}
+toastr.options = {
+    "closeButton": true,
+    "progressBar": true,
+    "positionClass": "toast-bottom-right",
+}
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests

@@ -1,7 +1,12 @@
 <template>
-    <div>
-        <div id="firebase-auth-container"></div>
-        <spinner-component/>
+    <div class="container mx-auto">
+        <div class="w-full max-w-lg mt-6 mx-auto rounded-lg border border-gray-400 px-4 py-4">
+            <h5 class="uppercase tracking-wide text-gray-800 text-base font-bold mb-5 ">
+                Sign in / Register
+            </h5>
+            <div id="firebase-auth-container"></div>
+            <spinner-component/>
+        </div>
     </div>
 </template>
 
@@ -30,6 +35,7 @@ export default {
                     signInSuccessWithAuthResult: (authResult, redirectUrl) => {
                         authResult.user.getIdToken()
                         .then((idToken) => {
+                            document.querySelector('#component-spinner').style.display = 'flex'
                             axios.post('/login-firebase', {
                                 idToken
                             })
@@ -49,8 +55,8 @@ export default {
                 credentialHelper: firebaseui.auth.CredentialHelper.NONE,
                 signInSuccessUrl: '/',
                 signInOptions: [
-                    firebase.auth.EmailAuthProvider.PROVIDER_ID,
                     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+                    firebase.auth.FacebookAuthProvider.PROVIDER_ID,
                     {
                         provider: firebase.auth.PhoneAuthProvider.PROVIDER_ID,
                         recaptchaParameters: {

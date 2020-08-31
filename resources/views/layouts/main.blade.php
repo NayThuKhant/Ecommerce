@@ -17,6 +17,7 @@
         }
     </script>
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <!-- Firebase UI CSS -->
     <link rel="stylesheet" href="{{ asset('packages/line-awesome/css/line-awesome.min.css') }}">
     <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css" />

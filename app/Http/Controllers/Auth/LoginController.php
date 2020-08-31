@@ -61,8 +61,10 @@ class LoginController extends Controller
             [
                 'email' => $firebase_user->email,
                 'phone' => $firebase_user->phoneNumber,
-                'name' => $firebase_user->displayName ?? $firebase_user->phoneNumber,
-                'password' => $firebase_user->passwordHash
+                'name' => $firebase_user->displayName,
+                'password' => $firebase_user->passwordHash,
+                'is_active' => true,
+                'more_info_needed' => true
             ]
         );
         \Illuminate\Support\Facades\Auth::login($user);

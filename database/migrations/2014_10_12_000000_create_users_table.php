@@ -21,6 +21,8 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->string('firebase_uid')->nullable();
+            $table->boolean('more_info_needed');
+            $table->boolean('is_active');
             $table->rememberToken();
             $table->timestamps();
         });

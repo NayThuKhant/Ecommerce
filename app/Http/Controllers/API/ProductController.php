@@ -12,4 +12,15 @@ class ProductController extends Controller
     {
         return Product::paginate(20);
     }
+    public function show(Product $product)
+    {
+        return $product->load('variants');
+    }
+    public function search(Request $request)
+    {
+        $keyword = $request->q;
+        $products = Product::select('name', 'id')->where('name', 'LIKE', "%{$keyword}%")->limit(10)->get()->makeHidden('min_price');
+        return $products;
+    }
+
 }

@@ -3,7 +3,6 @@
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,33 +15,17 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::namespace('API')->group(function () {
+    Route::middleware('auth:sanctum')->group(function() {
+        Route::post('/update-info', 'UserController@updateInfo');
+    });
+    Route::get('/products', 'ProductController@index');
+    Route::get('search', 'ProductController@search');
+    Route::get('products/{product}', 'ProductController@show');
+    Route::get('/user', 'UserController@getUser');
+    Route::get('categories', 'CategoryController@index');
+    Route::get('categories/{slug}', 'CategoryController@getProducts');
+});
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-Route::get('/products', 'API\ProductController@index');
-Route::get('/user', function () {
-    if (Auth::check()) {
-        return Auth::user();
-    }
-    return null;
-});
 
-Route::get('categories',function (){
-    return Category::all();
-});
-Route::get('categories/{slug}', function ($slug) {
-    return Category::with('products')->whereSlug($slug)->first();
-});
-Route::get('search', function (Request $request) {
-    $keyword = $request->q;
-    $products = Product::select('name', 'id')->where('name', 'LIKE', "%{$keyword}%")->limit(10)->get()->makeHidden('min_price');
-    return $products;
-});
-Route::get('products/{product}', function (Product $product) {
-    return $product->load('variants');
-});
-Route::middleware('auth:sanctum')->group(function() {
-
-});
 

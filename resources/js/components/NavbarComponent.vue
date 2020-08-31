@@ -10,7 +10,17 @@
 
                 <div class="flex">
                     <button class="rounded-icon"><i class="las la-shopping-bag"></i></button>
-                    <button  v-if="isAuthenticated" class="rounded-icon ml-4"><i class="lar la-user"></i></button>
+                    <div class="relative">
+                        <button  v-if="isAuthenticated" @click="showAccMenu = !showAccMenu" class="rounded-icon ml-4 "><i class="lar la-user"></i></button>
+                        <div v-show="showAccMenu" class="bg-white absolute shadow-xl w-64 rounded" style="top: 100%">
+                            <ul class="flex-col">
+                                <li><a href="#" class="px-2 py-3 border-b border-gray-300 hover:bg-gray-200 block">Password</a></li>
+                                <li><a href="#" class="px-2 py-3 border-b border-gray-300 hover:bg-gray-200 block">Address Book</a></li>
+                                <li><a href="#" class="px-2 py-3 border-b border-gray-300 hover:bg-gray-200 block">Update Profile</a></li>
+                                <li><a href="#" @click="logout" class="px-2 py-3 hover:bg-gray-200 block">Sign Out</a></li>
+                            </ul>
+                        </div>
+                    </div>
 
                     <div class="flex flex-col ml-3 justify-center">
                         <p v-if="isAuthenticated" class="text-gray-600 text-sm">Welcome {{ $store.state.user.name }}!</p>
@@ -28,6 +38,11 @@
 <script>
 export default {
     name: "NavbarComponent",
+    data() {
+        return {
+            showAccMenu: false
+        }
+    },
     computed: {
         isAuthenticated() {
             return this.$store.state.user != '';
