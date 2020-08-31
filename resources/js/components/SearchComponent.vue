@@ -4,7 +4,7 @@
                class="border border-gray-400 text-gray-800 placeholder-gray-700 bg-gray-100 font-semibold rounded-l w-full text-sm appearance-none focus:outline-none focus:shadow-outline px-4 py-2 leading-tight"
                placeholder="Search"
                v-model="keyword"
-               @keyup="deboucedFetch"
+               @keyup="debouncedFetch"
         >
         <button class="bg-indigo-500 text-white text-lg block px-3 rounded-r hover:bg-indigo-600">
             <i class="las la-search"></i></button>
@@ -31,7 +31,7 @@ export default {
         }
     },
     methods: {
-        deboucedFetch: _.debounce(
+        debouncedFetch: _.debounce(
             function(){
                 this.fetchResults()
             }, 500),

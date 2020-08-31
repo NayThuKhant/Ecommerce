@@ -34,6 +34,11 @@ Route::get('categories',function (){
 Route::get('categories/{slug}', function ($slug) {
     return Category::with('products')->whereSlug($slug)->first();
 });
+
+Route::get('products/{product}/variants',function ($id){
+    return Product::with('variants','categories')->whereId($id)->first();
+});
+
 Route::get('search', function (Request $request) {
     $keyword = $request->q;
     $products = Product::select('name', 'id')->where('name', 'LIKE', "%{$keyword}%")->limit(10)->get()->makeHidden('min_price');
@@ -42,6 +47,7 @@ Route::get('search', function (Request $request) {
 Route::get('products/{product}', function (Product $product) {
     return $product->load('variants');
 });
+
 Route::middleware('auth:sanctum')->group(function() {
 
 });

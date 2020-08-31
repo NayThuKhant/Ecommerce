@@ -35,6 +35,7 @@ class Variant extends Model
         'id' => 'integer',
         'product_id' => 'integer',
         'quantity' => 'integer',
+        'photos'=>'array',
     ];
 
 

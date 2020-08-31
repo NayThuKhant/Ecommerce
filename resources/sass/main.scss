@@ -39,3 +39,11 @@ html {
 .search-item:hover {
     @apply bg-gray-300;
 }
+
+
+//product.show tab in app.js
+.is-active{
+    color: red;
+    border-bottom: red 1px solid;
+}
+
