@@ -32,7 +32,6 @@ class Category extends Model
         'id' => 'integer',
     ];
 
-
     public function products()
     {
         return $this->belongsToMany(\App\Models\Product::class);
