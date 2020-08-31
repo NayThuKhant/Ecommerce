@@ -11,7 +11,8 @@ try {
     window.$ = window.jQuery = require('jquery');
     window.toastr = require('toastr')
     require('bootstrap');
-} catch (e) {}
+} catch (e) {
+}
 toastr.options = {
     "closeButton": true,
     "progressBar": true,
@@ -52,14 +53,13 @@ import 'firebase/firestore'
 import * as firebaseui from 'firebaseui'
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBQAK_dBTbGOlC6piJD99IXlqJGWPeOmHk",
-  authDomain: "ecommerce-ntk.firebaseapp.com",
-  databaseURL: "https://ecommerce-ntk.firebaseio.com",
-  projectId: "ecommerce-ntk",
-  storageBucket: "ecommerce-ntk.appspot.com",
-  messagingSenderId: "1021944174697",
-  appId: "1:1021944174697:web:eb42d4779b9b18e105eaf8",
-  measurementId: "G-8WZ2636QCR"
+    apiKey: process.env.MIX_FIREBASE_API_KEY,
+    authDomain: process.env.MIX_FIREBASE_AUTH_DOMAIN,
+    databaseURL: process.env.MIX_FIREBASE_DB_URL,
+    projectId: process.env.MIX_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.MIX_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.MIX_FIREBASE_MESSAGE_SENDER_ID,
+    appId: process.env.MIX_FIREBASE_APP_ID
 };
 firebase.initializeApp(firebaseConfig);
 window.firebase = firebase
