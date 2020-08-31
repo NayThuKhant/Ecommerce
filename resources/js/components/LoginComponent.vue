@@ -1,8 +1,13 @@
 <template>
-    <div id="firebase-auth-container"></div>
+    <div>
+        <div id="firebase-auth-container"></div>
+        <spinner-component/>
+    </div>
 </template>
 
 <script>
+
+let ui = new firebaseui.auth.AuthUI(auth);
 export default {
     name: "LoginComponent",
     data() {
@@ -15,15 +20,16 @@ export default {
             this.startSigninUi();
         })
     },
+    beforeDestroy() {
+        ui.reset()
+    },
     methods: {
         startSigninUi() {
-            let ui = new firebaseui.auth.AuthUI(auth);
             let signinConfig = {
                 callbacks: {
                     signInSuccessWithAuthResult: (authResult, redirectUrl) => {
                         authResult.user.getIdToken()
                         .then((idToken) => {
-                            console.log(idToken)
                             axios.post('/login-firebase', {
                                 idToken
                             })
@@ -35,6 +41,9 @@ export default {
                             })
                         })
                         return false
+                    },
+                    uiShown() {
+                        document.querySelector('#component-spinner').style.display = 'none'
                     }
                 },
                 credentialHelper: firebaseui.auth.CredentialHelper.NONE,
