@@ -1,5 +1,5 @@
 <template>
-    <div>cart</div>
+    <div class="container mx-auto p-3 bg-green-300">cart</div>
 </template>
 
 <script>

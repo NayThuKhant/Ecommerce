@@ -9,23 +9,37 @@
                 <search-component></search-component>
 
                 <div class="flex">
-                    <button class="rounded-icon"><i class="las la-shopping-bag"></i></button>
+                    <router-link to="/cart">
+                        <div class="relative">
+                            <button class="rounded-icon"><i class="las la-shopping-bag"></i></button>
+                            <span class="block absolute top-0 right-0 text-sm font-bold text-red-900 "
+                                  v-if="isAuthenticated">{{ cart_counter }}</span>
+                        </div>
+                    </router-link>
                     <div class="relative">
-                        <button  v-if="isAuthenticated" @click="showAccMenu = !showAccMenu" class="rounded-icon ml-4 "><i class="lar la-user"></i></button>
+                        <button v-if="isAuthenticated" @click="showAccMenu = !showAccMenu" class="rounded-icon ml-4 "><i
+                            class="lar la-user"></i></button>
                         <div v-show="showAccMenu" class="bg-white absolute shadow-xl w-64 rounded" style="top: 100%">
                             <ul class="flex-col">
-                                <li><a href="#" class="px-2 py-3 border-b border-gray-300 hover:bg-gray-200 block">Password</a></li>
-                                <li><a href="#" class="px-2 py-3 border-b border-gray-300 hover:bg-gray-200 block">Address Book</a></li>
-                                <li><a href="#" class="px-2 py-3 border-b border-gray-300 hover:bg-gray-200 block">Update Profile</a></li>
-                                <li><a href="#" @click="logout" class="px-2 py-3 hover:bg-gray-200 block">Sign Out</a></li>
+                                <li><a href="#" class="px-2 py-3 border-b border-gray-300 hover:bg-gray-200 block">Password</a>
+                                </li>
+                                <li><a href="#" class="px-2 py-3 border-b border-gray-300 hover:bg-gray-200 block">Address
+                                    Book</a></li>
+                                <li><a href="#" class="px-2 py-3 border-b border-gray-300 hover:bg-gray-200 block">Update
+                                    Profile</a></li>
+                                <li><a href="#" @click="logout" class="px-2 py-3 hover:bg-gray-200 block">Sign Out</a>
+                                </li>
                             </ul>
                         </div>
                     </div>
 
                     <div class="flex flex-col ml-3 justify-center">
-                        <p v-if="isAuthenticated" class="text-gray-600 text-sm">Welcome {{ $store.state.user.name }}!</p>
+                        <p v-if="isAuthenticated" class="text-gray-600 text-sm">Welcome {{
+                                $store.state.user.name
+                            }}!</p>
                         <div class="text-sm">
-                            <router-link v-if="!isAuthenticated" to="/login" class="link uppercase font-bold">Sign in</router-link>
+                            <router-link v-if="!isAuthenticated" to="/login" class="link uppercase font-bold">Sign in
+                            </router-link>
                             <a href="#" @click="logout" class="link" v-if="isAuthenticated">Logout</a>
                         </div>
                     </div>
@@ -40,7 +54,8 @@ export default {
     name: "NavbarComponent",
     data() {
         return {
-            showAccMenu: false
+            showAccMenu: false,
+            cart_counter: 0,
         }
     },
     computed: {
@@ -48,15 +63,32 @@ export default {
             return this.$store.state.user != '';
         }
     },
+    mounted() {
+        this.fetchCartCounter();
+    },
     methods: {
         logout() {
             axios.post('/logout')
-            .then(() => {
-                window.location.replace('/')
-            })
-            .catch((message) => {
-                console.log(error.message)
-            })
+                .then(() => {
+                    window.location.replace('/')
+                })
+                .catch((message) => {
+                    console.log(error.message)
+                })
+        },
+        fetchCartCounter() {
+           if(!this.isAuthenticated) {
+               axios.get('/api/cart-counter')
+               .then(({data}) => {
+                   this.cart_counter = data;
+               })
+               .catch((e) => {
+                   console.log(e);
+               })
+           }
+           else{
+               this.cart_counter = 0;
+           }
         }
     }
 }

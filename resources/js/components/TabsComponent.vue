@@ -8,7 +8,7 @@
             </ul>
         </div>
 
-        <hr class="h-2">
+        <hr class="h-2 mb-3">
 
         <div class="tabs-details px-20 text-sm">
             <slot></slot>

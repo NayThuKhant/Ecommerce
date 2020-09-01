@@ -37,5 +37,10 @@ class CartController extends Controller
         }
         return ['current_quantity' => $variant->pivot->quantity];
     }
+
+    public function counter()
+    {
+        return $counter = Auth::user()->cart->variants()->count();
+    }
 }
 
