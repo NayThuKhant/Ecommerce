@@ -19,14 +19,14 @@ class CartController extends Controller
     {
         $existed_in_cart = Auth::user()->cart->variants()->find($variant->id)->exists();
 
-        if($existed_in_cart)
+        if ($existed_in_cart)
         {
             $pivot = Auth::user()->cart->variants()->find($variant->id)->pivot;
-            $pivot -> quantity = $request -> quantity;
-            $pivot -> save();
+            $pivot->quantity = $request->quantity;
+            $pivot->save();
         }
         else {
-            Auth::user()->cart->variants()->attach($variant,['quantity'=> $request->quantity]);
+            Auth::user()->cart->variants()->attach($variant,['quantity' => $request->quantity]);
         }
     }
 }
