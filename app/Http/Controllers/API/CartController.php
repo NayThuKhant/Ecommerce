@@ -17,9 +17,9 @@ class CartController extends Controller
     }
     public function addToCart(Variant $variant, Request $request)
     {
-        $existed_in_cart = Auth::user()->cart->variants()->find($variant->id)->exists();
+        $existed_in_cart = Auth::user()->cart->variants()->find($variant->id);
 
-        if($existed_in_cart)
+        if($existed_in_cart != null)
         {
             $pivot = Auth::user()->cart->variants()->find($variant->id)->pivot;
             $pivot -> quantity = $request -> quantity;
