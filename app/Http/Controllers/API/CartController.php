@@ -17,17 +17,25 @@ class CartController extends Controller
     }
     public function addToCart(Variant $variant, Request $request)
     {
-        $existed_in_cart = Auth::user()->cart->variants()->find($variant->id)->exists();
-
-        if ($existed_in_cart)
+        $variants_instance = Auth::user()->cart->variants();
+        $variant_in_cart = $variants_instance->find($variant->id);
+        if($variant_in_cart != null)
         {
-            $pivot = Auth::user()->cart->variants()->find($variant->id)->pivot;
-            $pivot->quantity = $request->quantity;
+            $pivot = $variant_in_cart->pivot;
+            $pivot->quantity += $request->quantity;
             $pivot->save();
         }
         else {
-            Auth::user()->cart->variants()->attach($variant,['quantity' => $request->quantity]);
+            $variants_instance->attach($variant,['quantity' => $request->quantity]);
         }
+    }
+    public function getCurrentQuantityInCart(Variant $variant)
+    {
+        $variant = Auth::user()->cart->variants()->find($variant->id);
+        if (!$variant) {
+            return ['current_quantity' => 0];
+        }
+        return ['current_quantity' => $variant->pivot->quantity];
     }
 }
 

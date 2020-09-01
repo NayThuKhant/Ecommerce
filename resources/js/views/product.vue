@@ -42,7 +42,8 @@
                         <button @click="increaseQuantity" :disabled="disable_increasement"><i class="las la-plus-circle text-5xl text-blue-900"></i></button>
                     </div>
                     <div class="flex-1">
-                        <button class="w-full bg-blue-300 p-3 rounded-full hover:bg-blud-500 hover:shadow font-bold text-sm" @click="addToCart">Add to Cart
+                        <button class="w-full bg-blue-300 p-3 rounded-full hover:bg-blue-500 hover:shadow font-bold text-sm" @click="addToCart" :disabled="disable_add_to_cart">
+                            {{ disable_add_to_cart ? "Maxed" : "Add to Cart" }}
                         </button>
                     </div>
                 </div>
@@ -79,11 +80,15 @@ export default {
             product : {},
             selected_variant : {},
             quantity : 1,
-            disable_increasement : false,
+            current_quantity_in_cart: 0
         }
     },
     mounted() {
         this.fetchVariants()
+        .then(() => {
+            this.fetchCurrentQuantityInCart()
+        })
+
     },
     computed: {
         id() {
@@ -94,35 +99,53 @@ export default {
         },
         isAuthenticated(){
             return this.$store.state.user != '';
+        },
+        disable_increasement() {
+            if (this.quantity + this.current_quantity_in_cart >= this.selected_variant.stocks){
+                return true
+            }
+            return false
+        },
+        disable_add_to_cart() {
+            if (this.quantity > this.selected_variant.stocks - this.current_quantity_in_cart){
+                return true
+            }
+            return false
         }
-    },
+     },
     watch: {
         id() {
             this.fetchVariants()
+        },
+        selected_variant() {
+            this.fetchCurrentQuantityInCart()
         }
     },
     methods: {
-        fetchVariants() {
-            axios.get(`/api/products/${this.id}/variants`)
-                .then(({data}) => {
-                    this.product = data;
-                    this.selected_variant = this.product.variants[0];
-                })
-                .catch((e) => {
-                    console.log(e.message)
-                })
+        async fetchVariants() {
+            try {
+                let {data} = await axios.get(`/api/products/${this.id}/variants`)
+                this.product = data;
+                this.selected_variant = this.product.variants[0];
+            }
+            catch (e) {
+                toastr.error(e.message, "Error")
+            }
         },
-
+        fetchCurrentQuantityInCart() {
+            axios.get(`/api/cart/${this.selected_variant.id}/get_current_quantity`)
+            .then(({data}) => {
+                this.current_quantity_in_cart = data.current_quantity
+            })
+        },
         selectVariant(index) {
             this.selected_variant = this.product.variants[index];
             this.quantity = 1;
-            this.disable_increasement = false;
         },
 
         decreaseQuantity() {
             if(this.quantity > 1) {
                 this.quantity -= 1;
-                this.disable_increasement = false;
             }
             else {
                 console.log('can\'t be lower than 0') //temporary testing , replace with remove from cart
@@ -132,13 +155,6 @@ export default {
         increaseQuantity() {
             if(this.quantity < this.selected_variant.stocks) {
                 this.quantity += 1;
-
-                if(this.quantity === this.selected_variant.stocks){
-                    this.disable_increasement = true;
-                }
-            }
-            else{
-                this.disable_increasement = true;
             }
         },
 
@@ -147,8 +163,8 @@ export default {
               axios.post('/api/add-to-cart/' + this.selected_variant.id, {
                   quantity : this.quantity
               })
-               .then(({data}) => {
-                   console.log(data)
+               .then(() => {
+                   toastr.success('Added to cart successfully', "Success")
                })
                .catch((e) => {
                    console.log(e.message)

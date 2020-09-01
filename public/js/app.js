@@ -23501,6 +23501,15 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
 //
 //
 //
@@ -23581,11 +23590,15 @@ __webpack_require__.r(__webpack_exports__);
       product: {},
       selected_variant: {},
       quantity: 1,
-      disable_increasement: false
+      current_quantity_in_cart: 0
     };
   },
   mounted: function mounted() {
-    this.fetchVariants();
+    var _this = this;
+
+    this.fetchVariants().then(function () {
+      _this.fetchCurrentQuantityInCart();
+    });
   },
   computed: {
     id: function id() {
@@ -23598,34 +23611,81 @@ __webpack_require__.r(__webpack_exports__);
     },
     isAuthenticated: function isAuthenticated() {
       return this.$store.state.user != '';
+    },
+    disable_increasement: function disable_increasement() {
+      if (this.quantity + this.current_quantity_in_cart >= this.selected_variant.stocks) {
+        return true;
+      }
+
+      return false;
+    },
+    disable_add_to_cart: function disable_add_to_cart() {
+      if (this.quantity > this.selected_variant.stocks - this.current_quantity_in_cart) {
+        return true;
+      }
+
+      return false;
     }
   },
   watch: {
     id: function id() {
       this.fetchVariants();
+    },
+    selected_variant: function selected_variant() {
+      this.fetchCurrentQuantityInCart();
     }
   },
   methods: {
     fetchVariants: function fetchVariants() {
-      var _this = this;
+      var _this2 = this;
 
-      axios.get("/api/products/".concat(this.id, "/variants")).then(function (_ref) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var _yield$axios$get, data;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.prev = 0;
+                _context.next = 3;
+                return axios.get("/api/products/".concat(_this2.id, "/variants"));
+
+              case 3:
+                _yield$axios$get = _context.sent;
+                data = _yield$axios$get.data;
+                _this2.product = data;
+                _this2.selected_variant = _this2.product.variants[0];
+                _context.next = 12;
+                break;
+
+              case 9:
+                _context.prev = 9;
+                _context.t0 = _context["catch"](0);
+                toastr.error(_context.t0.message, "Error");
+
+              case 12:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, null, [[0, 9]]);
+      }))();
+    },
+    fetchCurrentQuantityInCart: function fetchCurrentQuantityInCart() {
+      var _this3 = this;
+
+      axios.get("/api/cart/".concat(this.selected_variant.id, "/get_current_quantity")).then(function (_ref) {
         var data = _ref.data;
-        _this.product = data;
-        _this.selected_variant = _this.product.variants[0];
-      })["catch"](function (e) {
-        console.log(e.message);
+        _this3.current_quantity_in_cart = data.current_quantity;
       });
     },
     selectVariant: function selectVariant(index) {
       this.selected_variant = this.product.variants[index];
       this.quantity = 1;
-      this.disable_increasement = false;
     },
     decreaseQuantity: function decreaseQuantity() {
       if (this.quantity > 1) {
         this.quantity -= 1;
-        this.disable_increasement = false;
       } else {
         console.log('can\'t be lower than 0'); //temporary testing , replace with remove from cart
       }
@@ -23633,21 +23693,14 @@ __webpack_require__.r(__webpack_exports__);
     increaseQuantity: function increaseQuantity() {
       if (this.quantity < this.selected_variant.stocks) {
         this.quantity += 1;
-
-        if (this.quantity === this.selected_variant.stocks) {
-          this.disable_increasement = true;
-        }
-      } else {
-        this.disable_increasement = true;
       }
     },
     addToCart: function addToCart() {
       if (this.isAuthenticated) {
         axios.post('/api/add-to-cart/' + this.selected_variant.id, {
           quantity: this.quantity
-        }).then(function (_ref2) {
-          var data = _ref2.data;
-          console.log(data);
+        }).then(function () {
+          toastr.success('Added to cart successfully', "Success");
         })["catch"](function (e) {
           console.log(e.message);
         });
@@ -70966,10 +71019,17 @@ var render = function() {
               "button",
               {
                 staticClass:
-                  "w-full bg-blue-300 p-3 rounded-full hover:bg-blud-500 hover:shadow font-bold text-sm",
+                  "w-full bg-blue-300 p-3 rounded-full hover:bg-blue-500 hover:shadow font-bold text-sm",
+                attrs: { disabled: _vm.disable_add_to_cart },
                 on: { click: _vm.addToCart }
               },
-              [_vm._v("Add to Cart\n                    ")]
+              [
+                _vm._v(
+                  "\n                        " +
+                    _vm._s(_vm.disable_add_to_cart ? "Maxed" : "Add to Cart") +
+                    "\n                    "
+                )
+              ]
             )
           ])
         ])

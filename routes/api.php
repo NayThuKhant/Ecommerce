@@ -20,6 +20,7 @@ Route::namespace('API')->group(function () {
         Route::post('/update-info', 'UserController@updateInfo');
         Route::get('/cart','CartController@index');
         Route::post('/add-to-cart/{variant}','CartController@addToCart');
+        Route::get('/cart/{variant}/get_current_quantity', 'CartController@getCurrentQuantityInCart');
     });
 
     Route::get('/products', 'ProductController@index');
