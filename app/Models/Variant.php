@@ -46,7 +46,7 @@ class Variant extends Model
 
     public function carts()
     {
-        return $this->belongsToMany(\App\Models\Cart::class);
+        return $this->belongsToMany(\App\Models\Cart::class)->withPivot('quantity');
     }
 
     public function product()

@@ -18,7 +18,10 @@ use Illuminate\Support\Facades\Route;
 Route::namespace('API')->group(function () {
     Route::middleware('auth:sanctum')->group(function () {
         Route::post('/update-info', 'UserController@updateInfo');
+        Route::get('/cart','CartController@index');
+        Route::post('/add-to-cart/{variant}','CartController@addToCart');
     });
+
     Route::get('/products', 'ProductController@index');
     Route::get('search', 'ProductController@search');
     Route::get('products/{product}', 'ProductController@show');

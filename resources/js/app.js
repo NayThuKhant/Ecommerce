@@ -21,7 +21,7 @@ const router = new VueRouter({
 Vue.use(VueProgressBar, {
     color: 'rgb(69,219,142)',
     failedColor: 'red',
-    height: '2px',
+    height: '3px',
     thickness: '4px',
 })
 Vue.use(VueRouter)

@@ -2,7 +2,7 @@
     <div>
         <div class="tabs">
             <ul class="flex justify-center">
-                <li v-for="tab in tabs" :class="{ 'is-active': tab.isActive }" class="block mx-5">
+                <li v-for="tab in tabs" :class="{ 'is-active': tab.isActive }" class="block mx-5 font-bold text-sm">
                     <a :href="tab.href" @click="selectTab(tab)">{{ tab.name }}</a>
                 </li>
             </ul>
@@ -10,7 +10,7 @@
 
         <hr class="h-2">
 
-        <div class="tabs-details px-40">
+        <div class="tabs-details px-20 text-sm">
             <slot></slot>
         </div>
     </div>
@@ -41,5 +41,8 @@ export default {
 </script>
 
 <style scoped>
-
+    .is-active {
+        border-bottom: red 2px solid;
+        color: red;
+        }
 </style>

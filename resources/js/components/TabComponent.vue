@@ -8,8 +8,8 @@
 export default {
     name: "TabComponent",
     props: {
-        name: { required: true },
-        selected: { default: false }
+        name: {required: true},
+        selected: {default: false}
     },
 
     data() {

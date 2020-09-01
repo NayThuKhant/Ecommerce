@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -67,6 +68,11 @@ class LoginController extends Controller
                 'more_info_needed' => true
             ]
         );
+
+        if(!$user->cart){
+            $user->cart()->save(new Cart());
+        }
+
         \Illuminate\Support\Facades\Auth::login($user);
         return response(['message' => 'Authenticated'], 200);
 
