@@ -22903,9 +22903,6 @@ __webpack_require__.r(__webpack_exports__);
       return this.$store.state.user != '';
     }
   },
-  mounted: function mounted() {
-    this.fetchCartCounter();
-  },
   methods: {
     logout: function logout() {
       axios.post('/logout').then(function () {
@@ -22913,20 +22910,6 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (message) {
         console.log(error.message);
       });
-    },
-    fetchCartCounter: function fetchCartCounter() {
-      var _this = this;
-
-      if (!this.isAuthenticated) {
-        axios.get('/api/cart-counter').then(function (_ref) {
-          var data = _ref.data;
-          _this.cart_counter = data;
-        })["catch"](function (e) {
-          console.log(e);
-        });
-      } else {
-        this.cart_counter = 0;
-      }
     }
   }
 });
@@ -23398,8 +23381,114 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "cart"
+  name: "cart",
+  data: function data() {
+    return {
+      variants: {}
+    };
+  },
+  mounted: function mounted() {
+    this.fetchVariantsInCart();
+  },
+  methods: {
+    fetchVariantsInCart: function fetchVariantsInCart() {
+      var _this = this;
+
+      axios.get('/api/product-in-cart').then(function (_ref) {
+        var data = _ref.data;
+        _this.variants = data;
+      })["catch"](function (e) {
+        console.log(e.message);
+      });
+    },
+    removeFromCart: function removeFromCart(product) {
+      var _this2 = this;
+
+      axios.post('api/remove-from-cart/' + product).then(function () {
+        toastr.success('Removed from cart successfully', "Success");
+
+        _this2.fetchVariantsInCart();
+      })["catch"](function (e) {
+        console.log(e.message);
+      });
+    },
+    decreaseQuantity: function decreaseQuantity(product) {
+      var _this3 = this;
+
+      if (this.variants[0].pivot.quantity == 1) {
+        this.removeFromCart(product);
+      } else {
+        axios.put('/api/decrease-from-cart/' + product).then(function () {
+          _this3.fetchVariantsInCart();
+        })["catch"](function (e) {
+          console.log(e);
+        });
+      }
+    },
+    increaseQuantity: function increaseQuantity(product) {
+      var _this4 = this;
+
+      axios.put('/api/increase-to-cart/' + product).then(function () {
+        _this4.fetchVariantsInCart();
+      })["catch"](function (e) {
+        console.log(e);
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -70822,11 +70911,158 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container mx-auto p-3 bg-green-300" }, [
-    _vm._v("cart")
+  return _c("div", { staticClass: "container mx-auto flex px-5" }, [
+    _c(
+      "div",
+      { staticClass: "w-2/3 mx-2 mt-3 flex-col" },
+      _vm._l(_vm.variants, function(variant, index) {
+        return _c("div", { staticClass: "flex my-2 py-2 bg-gray-200" }, [
+          _c("div", { staticClass: "flex w-2/3 px-3 flex" }, [
+            _c("img", {
+              staticClass: "w-20 h-20 border-2 border-gray-300",
+              attrs: { src: "/images/shirt.jpg", alt: "" }
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "flex-1 px-2" }, [
+              _c("h2", { staticClass: "font-italic text-sm" }, [
+                _vm._v(
+                  _vm._s(variant.product.name) +
+                    " (" +
+                    _vm._s(variant.name) +
+                    ")"
+                )
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "text-sm" }, [
+                _vm._v("Ks " + _vm._s(variant.special_price) + " ")
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "flex w-1/3 justify-around items-center" }, [
+            _c("span", { staticClass: "text-lg font-bold px-4" }, [
+              _vm._v(" Ks " + _vm._s(variant.pivot.sub_total))
+            ]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                on: {
+                  click: function($event) {
+                    return _vm.removeFromCart(variant.id)
+                  }
+                }
+              },
+              [_c("i", { staticClass: "las la-trash text-2xl text-blue-900" })]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                on: {
+                  click: function($event) {
+                    return _vm.decreaseQuantity(variant.id)
+                  }
+                }
+              },
+              [
+                _c("i", {
+                  staticClass: "las la-minus-circle text-2xl text-blue-900"
+                })
+              ]
+            ),
+            _vm._v(" "),
+            _c("span", { staticClass: "mx-3 font-bold text-lg" }, [
+              _vm._v(" " + _vm._s(variant.pivot.quantity) + " ")
+            ]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                on: {
+                  click: function($event) {
+                    return _vm.increaseQuantity(variant.id)
+                  }
+                }
+              },
+              [
+                _c("i", {
+                  staticClass: "las la-plus-circle text-2xl text-blue-900"
+                })
+              ]
+            )
+          ])
+        ])
+      }),
+      0
+    ),
+    _vm._v(" "),
+    _vm._m(0)
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "w-1/3 mx-2 mt-3" }, [
+      _c("div", { staticClass: "w-100 bg-gray-200 my-2 flex-col p-3" }, [
+        _c("div", { staticClass: "flex-col border-b-2 border-gray-400" }, [
+          _c("div", { staticClass: "mb-6" }, [_vm._v("Order Summary")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "my-3 text-sm flex justify-between" }, [
+            _c("span", [_vm._v("Subtotal ( 3 items )")]),
+            _vm._v(" "),
+            _c("span", [_vm._v("3000 MMK")])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "my-3 text-sm flex justify-between" }, [
+            _c("span", [_vm._v("Shipping Fee")]),
+            _vm._v(" "),
+            _c("span", [_vm._v("3000 MMK")])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "my-3 text-sm flex justify-between items-center" },
+            [
+              _c("input", {
+                staticClass: "w-2/3 h-8 mr-2 border-2 px-3 outline-none",
+                attrs: { type: "text", placeholder: "Voucher Code" }
+              }),
+              _vm._v(" "),
+              _c(
+                "button",
+                { staticClass: "w-1/3 ml-2 bg-blue-300 h-8 border-2" },
+                [_vm._v("APPLY")]
+              )
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "flex-col" }, [
+          _c(
+            "div",
+            { staticClass: "my-3 text-lg text-red-400 flex justify-between" },
+            [
+              _c("span", [_vm._v("Total")]),
+              _vm._v(" "),
+              _c("span", [_vm._v("3000 MMK")])
+            ]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "flex" }, [
+            _c(
+              "button",
+              { staticClass: "flex-1 bg-orange-400 text-sm p-2 text-white" },
+              [_vm._v("Place Order")]
+            )
+          ])
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 

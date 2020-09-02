@@ -38,6 +38,6 @@ class Cart extends Model
 
     public function variants()
     {
-        return $this->belongsToMany(\App\Models\Variant::class)->withPivot('quantity');
+        return $this->belongsToMany(\App\Models\Variant::class)->withPivot(['quantity','sub_total']);
     }
 }

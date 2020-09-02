@@ -63,9 +63,6 @@ export default {
             return this.$store.state.user != '';
         }
     },
-    mounted() {
-        this.fetchCartCounter();
-    },
     methods: {
         logout() {
             axios.post('/logout')
@@ -76,20 +73,6 @@ export default {
                     console.log(error.message)
                 })
         },
-        fetchCartCounter() {
-           if(!this.isAuthenticated) {
-               axios.get('/api/cart-counter')
-               .then(({data}) => {
-                   this.cart_counter = data;
-               })
-               .catch((e) => {
-                   console.log(e);
-               })
-           }
-           else{
-               this.cart_counter = 0;
-           }
-        }
     }
 }
 </script>

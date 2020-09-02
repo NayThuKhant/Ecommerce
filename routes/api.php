@@ -18,9 +18,14 @@ use Illuminate\Support\Facades\Route;
 Route::namespace('API')->group(function () {
     Route::middleware('auth:sanctum')->group(function () {
         Route::post('/update-info', 'UserController@updateInfo');
-        Route::get('/cart-counter','CartController@counter');
-        Route::get('/cart','CartController@index');
+
+        Route::get('/cart-counter','CartController@counter');  //for cart counter at nav bar
+
+        Route::get('/product-in-cart','CartController@index');
         Route::post('/add-to-cart/{variant}','CartController@addToCart');
+        Route::post('/remove-from-cart/{variant}','CartController@removeFromCart');
+        Route::put('/decrease-from-cart/{variant}','CartController@decreaseFormCart');
+        Route::put('/increase-to-cart/{variant}','CartController@increaseToCart');
         Route::get('/cart/{variant}/get_current_quantity', 'CartController@getCurrentQuantityInCart');
     });
 

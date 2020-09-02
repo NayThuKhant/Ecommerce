@@ -7,13 +7,14 @@ use App\Models\Variant;
 use Illuminate\Http\Request;
 use App\Models\Cart;
 use Illuminate\Support\Facades\Auth;
+use Ramsey\Uuid\Rfc4122\VariantTrait;
 use function GuzzleHttp\Promise\queue;
 
 class CartController extends Controller
 {
     public function index()
     {
-        return Auth::user()->cart->variants;
+        return Auth::user()->cart->variants->load('product');
     }
     public function addToCart(Variant $variant, Request $request)
     {
@@ -23,11 +24,31 @@ class CartController extends Controller
         {
             $pivot = $variant_in_cart->pivot;
             $pivot->quantity += $request->quantity;
+            $pivot->sub_total = 0;
             $pivot->save();
+            $pivot->sub_total = $variant -> special_price * $pivot->quantity;
+            $pivot ->save() ;
         }
         else {
-            $variants_instance->attach($variant,['quantity' => $request->quantity]);
+            $variants_instance->attach($variant,['quantity' => $request->quantity,'sub_total' => $variant->special_price * $request->quantity]);
         }
+    }
+    public function removeFromCart(Variant $variant){
+        Auth::user()->cart->variants()->detach($variant);
+    }
+    public function decreaseFormCart(Variant $variant){
+       $pivot = Auth::user()->cart->variants->find($variant)->pivot;
+       $pivot->quantity -= 1;
+       $pivot->save();
+       $pivot->sub_total = $variant -> special_price * $pivot->quantity;
+       $pivot->save();
+    }
+    public function increaseToCart(Variant $variant){
+       $pivot = Auth::user()->cart->variants->find($variant)->pivot;
+       $pivot->quantity += 1;
+       $pivot->save();
+       $pivot->sub_total = $variant -> special_price * $pivot->quantity;
+       $pivot->save();
     }
     public function getCurrentQuantityInCart(Variant $variant)
     {

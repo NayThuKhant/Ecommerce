@@ -22,6 +22,7 @@ class CreateCartsTable extends Migration
             $table->foreignId('cart_id')->constrained()->cascadeOnDelete();
             $table->foreignId('variant_id')->constrained()->cascadeOnDelete();
             $table->unsignedInteger('quantity');
+            $table->float('sub_total');
             $table->timestamps();
         });
     }

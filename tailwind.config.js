@@ -7,7 +7,8 @@ module.exports = {
         },
         colors: {
             ntk: '#999999'
-        }
+        },
+
     },
   },
   variants: {},
