@@ -27,6 +27,9 @@ Route::namespace('API')->group(function () {
         Route::put('/decrease-from-cart/{variant}','CartController@decreaseFormCart');
         Route::put('/increase-to-cart/{variant}','CartController@increaseToCart');
         Route::get('/cart/{variant}/get_current_quantity', 'CartController@getCurrentQuantityInCart');
+        Route::post('/clear-cart','CartController@clear');
+
+        Route::post('/order-now','OrderController@create');
     });
 
     Route::get('/products', 'ProductController@index');

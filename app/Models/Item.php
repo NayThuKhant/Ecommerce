@@ -11,15 +11,7 @@ class Item extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'order_id',
-        'product_id',
-        'variant_id',
-        'quantity',
-        'featured_photo',
-        'SKU',
-        'price'
-    ];
+    protected $guarded = [];
 
     /**
      * The attributes that should be cast to native types.
@@ -37,7 +29,7 @@ class Item extends Model
 
     public function order()
     {
-        return $this->belongsTo(\App\Models\Order::class);
+        return $this->belongsTo(\App\Models\Order::class,'items');
     }
 
     public function product()

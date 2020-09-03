@@ -26,6 +26,10 @@ class Variant extends Model
         'shipping_fee_multiplier',
     ];
 
+    protected $appends = [
+        'shipping_fee'
+    ];
+
     /**
      * The attributes that should be cast to native types.
      *
@@ -38,7 +42,6 @@ class Variant extends Model
         'photos' => 'array'
     ];
 
-
     public function items()
     {
         return $this->hasMany(\App\Models\Item::class);
@@ -46,11 +49,14 @@ class Variant extends Model
 
     public function carts()
     {
-        return $this->belongsToMany(\App\Models\Cart::class)->withPivot(['quantity','subtotal']);
+        return $this->belongsToMany(\App\Models\Cart::class)->withPivot(['quantity','sub_total']);
     }
 
     public function product()
     {
         return $this->belongsTo(\App\Models\Product::class);
+    }
+    public function getShippingFeeAttribute() {
+        return $this->shipping_fee_multiplier * config('base')['shipping_fee'];
     }
 }

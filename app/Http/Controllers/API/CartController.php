@@ -33,17 +33,20 @@ class CartController extends Controller
             $variants_instance->attach($variant,['quantity' => $request->quantity,'sub_total' => $variant->special_price * $request->quantity]);
         }
     }
-    public function removeFromCart(Variant $variant){
+    public function removeFromCart(Variant $variant)
+    {
         Auth::user()->cart->variants()->detach($variant);
     }
-    public function decreaseFormCart(Variant $variant){
+    public function decreaseFormCart(Variant $variant)
+    {
        $pivot = Auth::user()->cart->variants->find($variant)->pivot;
        $pivot->quantity -= 1;
        $pivot->save();
        $pivot->sub_total = $variant -> special_price * $pivot->quantity;
        $pivot->save();
     }
-    public function increaseToCart(Variant $variant){
+    public function increaseToCart(Variant $variant)
+    {
        $pivot = Auth::user()->cart->variants->find($variant)->pivot;
        $pivot->quantity += 1;
        $pivot->save();
@@ -57,6 +60,11 @@ class CartController extends Controller
             return ['current_quantity' => 0];
         }
         return ['current_quantity' => $variant->pivot->quantity];
+    }
+
+    public function clear()
+    {
+        Auth::user()->cart->variants()->sync([]);
     }
 
     public function counter()

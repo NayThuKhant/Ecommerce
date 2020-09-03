@@ -10,7 +10,7 @@
                         <li class="py-3 px-4 align-items-center" v-if="secondCategories.length != 0">More <i class="las la-angle-right float-right"></i>
                             <ul class="hidden rounded bg-white shadow w-full absolute top-0 h-full" style="left: 100%">
                                 <li class="py-3 border-b border-gray-300 px-3 hover:bg-gray-100" v-for="category in secondCategories">
-                                    <a href="#" class="block">{{ category.name }}</a>
+                                    <router-link :to="{ name: 'category', params: { slug: category.slug }}" class="block">{{ category.name }}</router-link>
                                 </li>
                             </ul>
                         </li>

@@ -19,7 +19,8 @@ class Order extends Model
         'subtotal',
         'shipping_fee',
         'discount',
-        'total'
+        'total',
+        'user_id'
     ];
 
     /**
@@ -37,7 +38,7 @@ class Order extends Model
 
     public function items()
     {
-        return $this->hasMany(\App\Models\Item::class);
+        return $this->hasMany(\App\Models\Item::class,'items');
     }
 
     public function orderStatus()

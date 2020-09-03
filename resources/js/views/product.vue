@@ -37,7 +37,7 @@
                         </button>
                         <span class="mx-3 font-bold text-2xl"> {{ quantity }} </span>
                         <button @click="increaseQuantity" :disabled="disable_increasement"><i
-                            class="las la-plus-circle text-5xl text-blue-900"></i></button>
+                            class="las la-plus-circle text-5xl text-blue-900" :class="{ 'opacity-50 cursor-not-allowed' : disable_increasement }"></i></button>
                     </div>
                     <div class="flex-1">
                         <button
