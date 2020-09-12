@@ -38,9 +38,8 @@ class Order extends Model
 
     public function items()
     {
-        return $this->hasMany(\App\Models\Item::class,'items');
+        return $this->hasMany(\App\Models\Item::class);
     }
-
     public function orderStatus()
     {
         return $this->hasOne(\App\Models\OrderStatus::class);

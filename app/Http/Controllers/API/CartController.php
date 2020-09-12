@@ -69,7 +69,12 @@ class CartController extends Controller
 
     public function counter()
     {
-        return $counter = Auth::user()->cart->variants()->count();
+        if(Auth::user()) {
+            return $counter = Auth::user()->cart->variants()->count();
+        }
+        else {
+            return 0;
+        }
     }
 }
 

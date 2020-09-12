@@ -1,5 +1,5 @@
 <template>
-    <div class="md:container sm:container-fluid mx-auto flex px-5"  v-if="is_not_empty_cart">
+    <div class="md:container sm:container-fluid mx-auto flex px-5" v-if="is_not_empty_cart">
         <div class="w-2/3 mx-2 mt-3 flex-col">
             <div class="flex my-2 py-2 bg-gray-200" v-for="(variant, index) in variants">
                 <div class="flex w-2/3 px-3 flex">
@@ -16,11 +16,11 @@
                     <span class="text-lg font-bold px-4"> Ks {{ variant.pivot.sub_total }}</span>
                     <button @click="removeFromCart(variant.id)"><i class="las la-trash text-2xl text-blue-900"></i>
                     </button>
-                    <button @click="decreaseQuantity(variant.id)"><i
+                    <button @click="decreaseQuantity(variant.id,index)"><i
                         class="las la-minus-circle text-2xl text-blue-900"></i>
                     </button>
                     <span class="mx-3 font-bold text-lg"> {{ variant.pivot.quantity }} </span>
-                    <button @click="increaseQuantity(variant.id)"><i
+                    <button @click="increaseQuantity(variant.id,index)"><i
                         class="las la-plus-circle text-2xl text-blue-900"></i></button>
                 </div>
             </div>
@@ -52,19 +52,22 @@
                     </div>
                     <div class="text-xs my-4 flex-col justify-content-between">
                         <div class="flex-1 flex items-center">
-                            <input type="radio" name="payment" class="mr-2" id="payment1" value="prepaid" v-model="payment">
+                            <input type="radio" name="payment" class="mr-2" id="payment1" value="prepaid"
+                                   v-model="payment">
                             <label for="payment1"> prepaid </label>
                         </div>
                         <div class="flex-1 flex items-center">
-                           <input type="radio" name="payment" class="mr-2" id="payment2" value="cash on delivery" v-model="payment">
+                            <input type="radio" name="payment" class="mr-2" id="payment2" value="cash on delivery"
+                                   v-model="payment">
                             <label for="payment2"> cash on delivery </label>
                         </div>
                     </div>
                     <div class="flex my-1">
-                        <button class="flex-1 bg-red-400 text-sm p-2 text-white" @click="clearCart">Clear Cart</button>
+                        <button class="flex-1 bg-red-400 text-sm p-2 text-white" @click="confirmClearCart">Clear Cart</button>
                     </div>
                     <div class="flex">
-                        <button class="flex-1 bg-orange-400 text-sm p-2 text-white" @click="orderNow">Place Order</button>
+                        <button class="flex-1 bg-orange-400 text-sm p-2 text-white" @click="confirmOrderNow">Place Order
+                        </button>
                     </div>
                 </div>
 
@@ -78,8 +81,8 @@ export default {
     name: "cart",
     data() {
         return {
-            variants : [],
-            payment : '',
+            variants: [],
+            payment: '',
         }
     },
     mounted() {
@@ -87,12 +90,11 @@ export default {
     },
     computed: {
         is_not_empty_cart() {
-          if(this.variants.length < 1) {
-              return false
-          }
-          else {
-              return true
-          }
+            if (this.variants.length < 1) {
+                return false
+            } else {
+                return true
+            }
         },
         counter() {
             return this.variants.length
@@ -100,7 +102,7 @@ export default {
         shipping_fee() {
             let max = 0;
             this.variants.forEach((variant) => {
-                if(variant.shipping_fee > max) {
+                if (variant.shipping_fee > max) {
                     max = variant.shipping_fee
                 }
             });
@@ -133,6 +135,7 @@ export default {
                 .then(() => {
                     toastr.success('Removed from cart successfully', "Success")
                     this.fetchVariantsInCart();
+                    this.eventBus.$emit('updated-cart')
                     this.$Progress.finish()
                 })
                 .catch((e) => {
@@ -140,8 +143,8 @@ export default {
                 })
         },
 
-        decreaseQuantity(product) {
-            if (this.variants[0].pivot.quantity == 1) {
+        decreaseQuantity(product, index) {
+            if (this.variants[index].pivot.quantity == 1) {
                 this.removeFromCart(product)
             } else {
                 this.$Progress.start()
@@ -156,44 +159,88 @@ export default {
             }
         },
 
-        increaseQuantity(product) {
-            this.$Progress.start()
-            axios.put('/api/increase-to-cart/' + product)
-                .then(() => {
-                    this.fetchVariantsInCart();
-                    this.$Progress.finish()
-                })
-                .catch((e) => {
-                    console.log(e)
-                })
+        increaseQuantity(product, index) {
+            if (this.variants[index].stocks <= this.variants[index].pivot.quantity) {
+                toastr.error(`There are only ${this.variants[index].stocks} stocks`, 'Out of stocks')
+            } else {
+                this.$Progress.start()
+                axios.put('/api/increase-to-cart/' + product)
+                    .then(() => {
+                        this.fetchVariantsInCart();
+                        this.$Progress.finish()
+                    })
+                    .catch((e) => {
+                        console.log(e)
+                    })
+            }
+        },
+
+        confirmOrderNow() {
+            this.$swal({
+                icon: 'info',
+                title: 'Are you sure to order now ?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Order Now',
+                cancelButtonText: 'Cancel',
+                showCloseButton: true,
+                showLoaderOnConfirm: true
+            }).then((result) => {
+                if (result.value) {
+                    this.orderNow()
+                } else {
+                    this.$swal('Cancel', 'Your items are still in cart', 'info')
+                }
+            })
         },
 
         orderNow() {
             this.$Progress.start()
-            axios.post('/api/order-now',{
-                payment_method : this.payment
+            axios.post('/api/order-now', {
+                payment_method: this.payment
             })
-            .then(() => {
-                toastr.success('Successfully Ordered','Success')
-                this.clearCart()
-                this.$Progress.finish()
-            })
-            .catch((e) => {
-                console.log(e.message)
-            })
+                .then(() => {
+                    this.clearCart()
+                    this.$Progress.finish()
+                    this.$swal('Ordered', 'successfully ordered', 'success')
+                })
+                .catch((e) => {
+                    console.log(e.message)
+                })
         },
 
+
+        confirmClearCart() {
+            this.$swal({
+                icon: 'question',
+                title: 'Are you sure to clear you cart?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Clear Cart',
+                cancelButtonText: 'Cancel',
+                showCloseButton: true,
+                showLoaderOnConfirm: true
+            }).then((result) => {
+                if (result.value) {
+                    this.clearCart()
+                } else {
+                    this.$swal('Cancel', 'Your items are still in cart', 'info')
+                }
+            })
+        },
         clearCart() {
             axios.post('/api/clear-cart')
-            .then(() => {
-                toastr.success('Successfully Cleared','Success')
-                this.fetchVariantsInCart();
-            })
-            .catch((e) => {
-                console.log(e.message)
-            })
-        }
+                .then(() => {
+                    toastr.success('successfully cleared your cart','success')
+                    this.fetchVariantsInCart();
+                    this.eventBus.$emit('updated-cart')
+                })
+                .catch((e) => {
+                    console.log(e.message)
+                })
 
+
+        },
 
     }
 

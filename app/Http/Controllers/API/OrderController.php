@@ -5,11 +5,16 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Item;
 use App\Models\Order;
+use App\Models\OrderStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
+    public function index() {
+        return Auth::user()->orders->load('orderStatus')->load('items.variant.product');
+    }
+
     public function create(Request $request)
     {
         $variants = Auth::user()->cart->variants;
@@ -39,6 +44,8 @@ class OrderController extends Controller
             'total' => $sub_total + $shipping_fee,
         ]);
 
+        $order->orderStatus()->save(new OrderStatus());
+
         foreach ($variants as $variant)
         {
             Item::create([
@@ -47,7 +54,7 @@ class OrderController extends Controller
                 'name' => $variant->name,
                 'SKU' => $variant->SKU,
                 'featured_photo' => $variant->photos,
-                'price' => $variant->special_price,
+                'price' => $variant->special_price * $variant->carts->where('user_id',Auth::user()->id)->first()->pivot->quantity,
                 'quantity' => $variant->carts->where('user_id',Auth::user()->id)->first()->pivot->quantity,
             ]);
         }

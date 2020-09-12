@@ -4,6 +4,7 @@ import category from './views/category.vue'
 import product from "./views/product";
 import MoreInfoView from "./views/ProfileMgmt/MoreInfoView.vue";
 import cart from "./views/cart"
+import orders from "./views/orders";
 import change_password from "./views/ProfileMgmt/change_password.vue";
 
 const Routes = [
@@ -36,6 +37,11 @@ const Routes = [
         path: '/cart',
         name: 'cart',
         component: cart
+    },
+    {
+        path : '/orders',
+        name : 'orders',
+        component: orders
     }
 ]
 export default Routes

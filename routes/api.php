@@ -30,6 +30,7 @@ Route::namespace('API')->group(function () {
         Route::post('/clear-cart','CartController@clear');
 
         Route::post('/order-now','OrderController@create');
+        Route::get('orders','OrderController@index');
     });
 
     Route::get('/products', 'ProductController@index');

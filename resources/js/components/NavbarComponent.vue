@@ -21,6 +21,7 @@
                             class="lar la-user"></i></button>
                         <div v-show="showAccMenu" class="bg-white absolute shadow-xl w-64 rounded" style="top: 100%">
                             <ul class="flex-col">
+                                <li><router-link class="px-2 py-3 border-b border-gray-300 hover:bg-gray-200 block" to="/orders">My Orders</router-link></li>
                                 <li><a href="#" class="px-2 py-3 border-b border-gray-300 hover:bg-gray-200 block">Password</a>
                                 </li>
                                 <li><a href="#" class="px-2 py-3 border-b border-gray-300 hover:bg-gray-200 block">Address
@@ -63,6 +64,12 @@ export default {
             return this.$store.state.user != '';
         }
     },
+    mounted() {
+        this.fetchCartCounter();
+        this.eventBus.$on('updated-cart',() => {
+            this.fetchCartCounter()
+        })
+    },
     methods: {
         logout() {
             axios.post('/logout')
@@ -72,6 +79,15 @@ export default {
                 .catch((message) => {
                     console.log(error.message)
                 })
+        },
+        fetchCartCounter() {
+            axios.get('/api/cart-counter')
+            .then(({data}) => {
+                this.cart_counter = data;
+            })
+            .catch((e) => {
+                console.log(e.message);
+            })
         },
     }
 }

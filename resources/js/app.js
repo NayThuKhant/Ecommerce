@@ -3,6 +3,7 @@ require('./bootstrap');
 import Vue from 'vue';
 import Vuex from 'vuex';
 import VueProgressBar from 'vue-progressbar'
+import VueSweetalert2 from "vue-sweetalert2";
 import Routes from './routes'
 import storeOptions from "./store";
 import defineRouteGuard from "./router_guard";
@@ -25,6 +26,18 @@ Vue.use(VueProgressBar, {
     thickness: '4px',
 })
 Vue.use(VueRouter)
+Vue.use(VueSweetalert2)
+
+
+const eventBus = new Vue()
+
+Vue.mixin({
+    data: function () {
+        return {
+            eventBus: eventBus
+        }
+    }
+})
 let app;
 defineRouteGuard()
     .then(() => {
