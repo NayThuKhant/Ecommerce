@@ -3,7 +3,7 @@
         <div class="container-fluid bg-gray-200 flex flex-col mb-6" v-for="order in orders">
             <div class="flex justify-between border-solid border-b-2 border-black-900 text-sm p-3 bg-orange-300">
                 <span>Order#{{ order.id}}</span>
-                <span>Ordered on {{ order.created_at }}</span>
+                <span>Ordered on {{ new Date(order.created_at) }}</span>
                 <span>Total : {{ order.total }} mmk</span>
                 <span>{{ order.items.length }} items</span>
                 <a href="#" class="text-sm">Manage</a>

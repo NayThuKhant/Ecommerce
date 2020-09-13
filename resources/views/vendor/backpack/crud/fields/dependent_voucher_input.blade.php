@@ -12,7 +12,7 @@
     <p class="help-block">Select voucher type</p>
 </div>
 
-<div class="form-group col-md-6">
+<div class="form-group col-md-6
 
     <label id="v_value_label">Discount in Money <span class="text-danger">*</span></label>
     <div class="input-group">

@@ -74795,7 +74795,9 @@ var render = function() {
             [
               _c("span", [_vm._v("Order#" + _vm._s(order.id))]),
               _vm._v(" "),
-              _c("span", [_vm._v("Ordered on " + _vm._s(order.created_at))]),
+              _c("span", [
+                _vm._v("Ordered on " + _vm._s(new Date(order.created_at)))
+              ]),
               _vm._v(" "),
               _c("span", [_vm._v("Total : " + _vm._s(order.total) + " mmk")]),
               _vm._v(" "),
