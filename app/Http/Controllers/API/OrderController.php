@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cancellation;
 use App\Models\Item;
 use App\Models\Order;
 use App\Models\OrderStatus;
@@ -11,8 +12,20 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    public function index() {
-        return Auth::user()->orders->load('orderStatus')->load('items.variant.product');
+    public function index()
+    {
+        return Auth::user()->orders->load('items.variant.product');
+    }
+    public function manageOrder($id)
+    {
+        return Auth::user()->orders->find($id)->load('orderStatus')->load('user')->load('items.variant.product');
+    }
+    function cancelOrder($id,Request $request) {
+        $data = $request->validate([
+            'reason' => ['required','string']
+        ]);
+        $order =  Order::findOrFail($id);
+        $order->cancellation()->save(new Cancellation(['reason' => $data['reason']]));
     }
 
     public function create(Request $request)

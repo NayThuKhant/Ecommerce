@@ -31,6 +31,8 @@ Route::namespace('API')->group(function () {
 
         Route::post('/order-now','OrderController@create');
         Route::get('orders','OrderController@index');
+        Route::get('/orders/{id}/manage','OrderController@manageOrder');
+        Route::post('/orders/{id}/cancel','OrderController@cancelOrder');
     });
 
     Route::get('/products', 'ProductController@index');

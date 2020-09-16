@@ -51,6 +51,7 @@ export default {
         },
         clickaway() {
             this.searchBoxActive = false
+            this.clearSearch()
         },
         clearSearch() {
             this.searchBoxActive = false

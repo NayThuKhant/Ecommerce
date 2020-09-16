@@ -52,7 +52,10 @@ trait OrderStatusOperation
         // prepare the fields you need to show
         $this->data['crud'] = $this->crud;
         $this->data['title'] = $this->crud->getTitle() ?? 'orderstatus '.$this->crud->entity_name;
-        $this->data['entry'] = $order;
+        $this->data['order'] = $order;
+
+
+
         // load the view
         return view("custom.order_status", $this->data);
     }

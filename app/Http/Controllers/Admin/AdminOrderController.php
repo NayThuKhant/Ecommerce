@@ -3,83 +3,81 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
+use http\Env\Response;
 use Illuminate\Http\Request;
 
 class AdminOrderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    public function isCancelled(Order $order)
     {
-        return view('admin.orders.orders');
+        return $order->cancellation()->exists();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function confirmOrder(Order $order)
     {
-        //
+        if ($this->isCancelled($order)) {
+            return redirect()->back()->with('error', 'The order was cancelled and there\' nothing to do');
+        } else {
+            $order->orderStatus->update([
+                'confirmed_at' => date('Y-m-d H:i:s')
+            ]);
+            return redirect()->back()->with('success', 'Successfully confirmed');
+        }
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function proceedOrder(Order $order)
     {
-        //
+        if ($this->isCancelled($order)) {
+            return redirect()->back()->with('error', 'The order was cancelled and there\' nothing to do');
+        } else {
+            if ($order->orderStatus->confirmed_at) {
+                $order->orderStatus->update([
+                    'processed_at' => date('Y-m-d H:i:s')
+                ]);
+                return redirect()->back()->with('success', 'Successfully proceeded');
+            } else {
+                return redirect()->back()->with('fail', 'You have to confirm the order first');
+            }
+        }
+
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function shipOrder(Order $order)
     {
-        //
+        if ($this->isCancelled($order)) {
+            return redirect()->back()->with('error', 'The order was cancelled and there\' nothing to do');
+        } else {
+            if ($order->orderStatus->processed_at) {
+                $order->orderStatus->update([
+                    'shipped_at' => date('Y-m-d H:i:s')
+                ]);
+                return redirect()->back()->with('success', 'Successfully shipped');
+            } else {
+                return redirect()->back()->with('fail', 'You have to proceed the order first');
+            }
+        }
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function deliverOrder(Order $order)
     {
-        //
-    }
+        if ($this->isCancelled($order)) {
+            return redirect()->back()->with('error', 'The order was cancelled and there\' nothing to do');
+        } else {
+            if ($order->orderStatus->shipped_at) {
+                $order->orderStatus->update([
+                    'delivered_at' => date('Y-m-d H:i:s'),
+                    'paid_at' => date('Y-m-d H:i:s')
+                ]);
+                return redirect()->back()->with('success', 'successfully delivered');
+            } else {
+                return redirect()->back()->with('fail', 'You have to ship the order first');
+            }
+        }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

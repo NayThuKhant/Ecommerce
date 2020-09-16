@@ -17,7 +17,7 @@
 <script>
 export default {
     name: "ItemComponent",
-    props: ['product']
+    props: ['product','manage']
 }
 </script>
 

@@ -20,5 +20,9 @@ Route::group([
     Route::crud('product', 'ProductCrudController');
     Route::crud('category', 'CategoryCrudController');
     Route::crud('voucher', 'VoucherCrudController');
-    Route::resource('orders','AdminOrderController');
+    Route::post('orders/{order}/confirm','AdminOrderController@confirmOrder')->name('confirm-order');
+    Route::post('orders/{order}/proceed','AdminOrderController@proceedOrder')->name('proceed-order');
+    Route::post('orders/{order}/ship','AdminOrderController@shipOrder')->name('ship-order');
+    Route::post('orders/{order}/deliver','AdminOrderController@deliverOrder')->name('deliver-order');
+    Route::crud('order', 'OrderCrudController');
 }); // this should be the absolute last line of this file

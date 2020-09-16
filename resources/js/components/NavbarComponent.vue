@@ -21,14 +21,14 @@
                             class="lar la-user"></i></button>
                         <div v-show="showAccMenu" class="bg-white absolute shadow-xl w-64 rounded" style="top: 100%">
                             <ul class="flex-col">
-                                <li><router-link class="px-2 py-3 border-b border-gray-300 hover:bg-gray-200 block" to="/orders">My Orders</router-link></li>
-                                <li><a href="#" class="px-2 py-3 border-b border-gray-300 hover:bg-gray-200 block">Password</a>
+                                <li @click="showAccMenu=false"><router-link class="px-2 py-3 border-b border-gray-300 hover:bg-gray-200 block" to="/orders">My Orders</router-link></li>
+                                <li @click="showAccMenu=false"><a href="#" class="px-2 py-3 border-b border-gray-300 hover:bg-gray-200 block">Password</a>
                                 </li>
-                                <li><a href="#" class="px-2 py-3 border-b border-gray-300 hover:bg-gray-200 block">Address
+                                <li @click="showAccMenu=false"><a href="#" class="px-2 py-3 border-b border-gray-300 hover:bg-gray-200 block">Address
                                     Book</a></li>
-                                <li><a href="#" class="px-2 py-3 border-b border-gray-300 hover:bg-gray-200 block">Update
+                                <li @click="showAccMenu=false"><a href="#" class="px-2 py-3 border-b border-gray-300 hover:bg-gray-200 block">Update
                                     Profile</a></li>
-                                <li><a href="#" @click="logout" class="px-2 py-3 hover:bg-gray-200 block">Sign Out</a>
+                                <li @click="showAccMenu=false"><a href="#" @click="logout" class="px-2 py-3 hover:bg-gray-200 block">Sign Out</a>
                                 </li>
                             </ul>
                         </div>

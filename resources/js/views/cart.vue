@@ -3,7 +3,7 @@
         <div class="w-2/3 mx-2 mt-3 flex-col">
             <div class="flex my-2 py-2 bg-gray-200" v-for="(variant, index) in variants">
                 <div class="flex w-2/3 px-3 flex">
-                    <img src="/images/shirt.jpg" alt="" class="w-20 h-20 border-2 border-gray-300">
+                    <img :src="`/${JSON.parse(variant.photos)[0]}`" alt="" class="w-20 h-20 border-2 border-gray-300">
                     <div class="flex-1 px-2">
                         <router-link :to="{ name : 'product.show', params : { id : variant.product.id }}">
                             <h2 class="font-italic text-sm">{{ variant.product.name }} ({{ variant.name }})</h2>
@@ -58,7 +58,7 @@
                         </div>
                         <div class="flex-1 flex items-center">
                             <input type="radio" name="payment" class="mr-2" id="payment2" value="cash on delivery"
-                                   v-model="payment">
+                                   checked v-model="payment">
                             <label for="payment2"> cash on delivery </label>
                         </div>
                     </div>
@@ -82,7 +82,7 @@ export default {
     data() {
         return {
             variants: [],
-            payment: '',
+            payment: 'cash on delivery',
         }
     },
     mounted() {
@@ -124,6 +124,7 @@ export default {
             axios.get('/api/product-in-cart')
                 .then(({data}) => {
                     this.variants = data
+                    console.log(data)
                 })
                 .catch((e) => {
                     console.log(e.message)

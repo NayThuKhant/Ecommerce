@@ -36,7 +36,6 @@ class Cancellation extends Model
         'cancelled_at',
     ];
 
-
     public function order()
     {
         return $this->belongsTo(\App\Models\Order::class);

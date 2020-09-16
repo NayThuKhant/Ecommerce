@@ -30,6 +30,7 @@ class OrderStatus extends Model
         'order_id' => 'integer',
     ];
 
+
     /**
      * The attributes that should be mutated to dates.
      *

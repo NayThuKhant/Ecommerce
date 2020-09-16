@@ -5,6 +5,7 @@ import product from "./views/product";
 import MoreInfoView from "./views/ProfileMgmt/MoreInfoView.vue";
 import cart from "./views/cart"
 import orders from "./views/orders";
+import manage_order from "./views/manage_order";
 import change_password from "./views/ProfileMgmt/change_password.vue";
 
 const Routes = [
@@ -42,6 +43,11 @@ const Routes = [
         path : '/orders',
         name : 'orders',
         component: orders
+    },
+    {
+        path : '/orders/:id/manage',
+        name : 'order.manage',
+        component: manage_order,
     }
 ]
 export default Routes

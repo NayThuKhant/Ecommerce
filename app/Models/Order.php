@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     use CrudTrait;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -35,17 +36,57 @@ class Order extends Model
         'discount' => 'double',
     ];
 
+    protected $appends = [
+        'final_status',
+        'is_cancellable'
+    ];
+
+    public function cancellation()
+    {
+        return $this->hasOne(Cancellation::class);
+    }
 
     public function items()
     {
         return $this->hasMany(\App\Models\Item::class);
     }
+
     public function orderStatus()
     {
         return $this->hasOne(\App\Models\OrderStatus::class);
     }
+
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function getFinalStatusAttribute()
+    {
+        if ($this->cancellation()->exists()) {
+            return 'cancelled';
+        } else {
+            if ($this->orderStatus->delivered_at) {
+                return 'delivered / ended';
+            } else if ($this->orderStatus->shipped_at) {
+                return 'shipped';
+            } else if ($this->orderStatus->processed_at) {
+                return 'proceeded';
+            } else if ($this->orderStatus->confirmed_at) {
+                return 'confirmed';
+            } else {
+                return 'pending';
+            }
+        }
+    }
+
+    public function getIsCancellableAttribute()
+    {
+        $status = $this->getFinalStatusAttribute();
+        if ($status == 'pending' || $status == 'confirmed' || $status == 'proceeded') {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
