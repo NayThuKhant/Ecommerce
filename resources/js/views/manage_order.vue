@@ -1,5 +1,7 @@
 <template>
     <div class="container mx-auto py-5 flex flex-col">
+
+        <button></button>
         <div class="container-fluid bg-gray-200 flex my-2 p-5 justify-around bg-red-400" v-if="is_cancelled">
             <div class="flex flex-col text-center">
                 <i class="lar la-times-circle text-red-900" style="font-size: 64px"></i>
@@ -23,7 +25,7 @@
             </div>
             <div class="flex flex-col opacity-25 text-center" :class="{ 'opacity-100' : processed }">
                 <i class="lar la-check-circle" :class="{ 'text-green-900' : processed }" style="font-size: 40px"></i>
-                <span class="text-xs">Proceeded</span>
+                <span class="text-xs">Processed</span>
             </div>
             <div class="flex flex-col opacity-25 text-center" :class="{ 'opacity-100' : shipped }">
                 <i class="lar la-check-circle" :class="{ 'text-green-900' : shipped }" style="font-size: 40px"></i>

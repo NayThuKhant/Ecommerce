@@ -71,7 +71,7 @@ class Order extends Model
             } else if ($this->orderStatus->shipped_at) {
                 return 'shipped';
             } else if ($this->orderStatus->processed_at) {
-                return 'proceeded';
+                return 'processed';
             } else if ($this->orderStatus->confirmed_at) {
                 return 'confirmed';
             } else {

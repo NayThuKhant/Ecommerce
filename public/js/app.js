@@ -22972,6 +22972,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "OrderComponent.vue",
   props: ['order', 'manage']
@@ -23860,6 +23861,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "manage_order",
@@ -24020,12 +24023,48 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "orders",
   data: function data() {
     return {
-      orders: []
+      orders: [],
+      filtered_orders: {
+        'name': '',
+        'orders': []
+      }
     };
+  },
+  computed: {
+    cancelled_orders: function cancelled_orders() {
+      return this.filterOrdersData('cancelled');
+    },
+    pending_orders: function pending_orders() {
+      return this.filterOrdersData('pending');
+    },
+    confirmed_orders: function confirmed_orders() {
+      return this.filterOrdersData('confirmed');
+    },
+    shipped_orders: function shipped_orders() {
+      return this.filterOrdersData('shipped');
+    },
+    processed_orders: function processed_orders() {
+      return this.filterOrdersData('processed');
+    },
+    delivered_orders: function delivered_orders() {
+      return this.filterOrdersData('delivered / ended');
+    }
   },
   mounted: function mounted() {
     this.fetchOrders();
@@ -24037,8 +24076,19 @@ __webpack_require__.r(__webpack_exports__);
       axios.get('/api/orders').then(function (_ref) {
         var data = _ref.data;
         _this.orders = data;
+        _this.filtered_orders.orders = data;
+        _this.filtered_orders.name = 'All';
       })["catch"](function (e) {
         console.log(e.message);
+      });
+    },
+    filterOrders: function filterOrders(data, name) {
+      this.filtered_orders.orders = data;
+      this.filtered_orders.name = name;
+    },
+    filterOrdersData: function filterOrdersData(status) {
+      return this.orders.filter(function (order) {
+        return order.final_status == status;
       });
     }
   }
@@ -24063,8 +24113,6 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-//
-//
 //
 //
 //
@@ -73816,7 +73864,7 @@ var render = function() {
               staticClass: "hover:text-blue-900",
               attrs: { to: { name: "orders" } }
             },
-            [_vm._v("Back to all orders")]
+            [_vm._v("Back to all orders\n        ")]
           )
         ],
         1
@@ -75126,6 +75174,8 @@ var render = function() {
     "div",
     { staticClass: "container mx-auto py-5 flex flex-col" },
     [
+      _c("button"),
+      _vm._v(" "),
       _vm.is_cancelled
         ? _c(
             "div",
@@ -75188,7 +75238,7 @@ var render = function() {
                     staticStyle: { "font-size": "40px" }
                   }),
                   _vm._v(" "),
-                  _c("span", { staticClass: "text-xs" }, [_vm._v("Proceeded")])
+                  _c("span", { staticClass: "text-xs" }, [_vm._v("Processed")])
                 ]
               ),
               _vm._v(" "),
@@ -75458,13 +75508,188 @@ var render = function() {
   return _c(
     "div",
     { staticClass: "container mx-auto py-5" },
-    _vm._l(_vm.orders, function(order) {
-      return _c("order-component", {
-        key: order.id,
-        attrs: { order: order, manage: true }
+    [
+      _c(
+        "div",
+        { staticClass: "container-fluid bg-gray-200 flex mb-2 p-2 flex" },
+        [
+          _c(
+            "button",
+            {
+              staticClass: "focus:outline-none p-2 text-xs select-none",
+              class: {
+                "text-blue-500 text-sm font-bold":
+                  _vm.filtered_orders.name == "All"
+              },
+              on: {
+                click: function($event) {
+                  return _vm.filterOrders(_vm.orders, "All")
+                }
+              }
+            },
+            [_vm._v("All")]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "focus:outline-none p-2 text-xs select-none",
+              class: {
+                "text-blue-500 text-sm font-bold":
+                  _vm.filtered_orders.name == "Cancelled"
+              },
+              on: {
+                click: function($event) {
+                  return _vm.filterOrders(_vm.cancelled_orders, "Cancelled")
+                }
+              }
+            },
+            [_vm._v("Confirmed")]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "focus:outline-none p-2 text-xs select-none",
+              class: {
+                "text-blue-500 text-sm font-bold":
+                  _vm.filtered_orders.name == "Pending"
+              },
+              on: {
+                click: function($event) {
+                  return _vm.filterOrders(_vm.pending_orders, "Pending")
+                }
+              }
+            },
+            [_vm._v("Pending")]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "focus:outline-none p-2 text-xs select-none",
+              class: {
+                "text-blue-500 text-sm font-bold":
+                  _vm.filtered_orders.name == "Confirmed"
+              },
+              on: {
+                click: function($event) {
+                  return _vm.filterOrders(_vm.confirmed_orders, "Confirmed")
+                }
+              }
+            },
+            [_vm._v("Confirmed")]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "focus:outline-none p-2 text-xs select-none",
+              class: {
+                "text-blue-500 text-sm font-bold":
+                  _vm.filtered_orders.name == "Processed"
+              },
+              on: {
+                click: function($event) {
+                  return _vm.filterOrders(_vm.processed_orders, "Processed")
+                }
+              }
+            },
+            [_vm._v("Processed")]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "focus:outline-none p-2 text-xs select-none",
+              class: {
+                "text-blue-500 text-sm font-bold":
+                  _vm.filtered_orders.name == "Shipped"
+              },
+              on: {
+                click: function($event) {
+                  return _vm.filterOrders(_vm.shipped_orders, "Shipped")
+                }
+              }
+            },
+            [_vm._v("Shipped")]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "focus:outline-none p-2 text-xs select-none",
+              class: {
+                "text-blue-500 text-sm font-bold":
+                  _vm.filtered_orders.name == "Delivered"
+              },
+              on: {
+                click: function($event) {
+                  return _vm.filterOrders(_vm.delivered_orders, "Delivered")
+                }
+              }
+            },
+            [_vm._v("Delivered")]
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.filtered_orders.orders.length == 0,
+              expression: "filtered_orders.orders.length == 0"
+            }
+          ],
+          staticClass: "container-fluid mb-2 p-2"
+        },
+        [
+          _c(
+            "span",
+            { staticClass: "text-sm font-bold" },
+            [
+              _vm._v("There's no "),
+              _c("span", [_vm._v(_vm._s(_vm.filtered_orders.name))]),
+              _vm._v(" orders currently, go back to "),
+              _c(
+                "span",
+                {
+                  staticClass: "text-blue-500 cursor-pointer",
+                  on: {
+                    click: function($event) {
+                      return _vm.filterOrders(_vm.orders, "All")
+                    }
+                  }
+                },
+                [_vm._v("All Orders")]
+              ),
+              _vm._v(" or "),
+              _c(
+                "router-link",
+                {
+                  staticClass: "text-blue-500 cursor-pointer",
+                  attrs: { to: { name: "home" } }
+                },
+                [_vm._v("make a new one")]
+              )
+            ],
+            1
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _vm._l(_vm.filtered_orders.orders, function(order) {
+        return _c("order-component", {
+          key: order.id,
+          attrs: { order: order, manage: true }
+        })
       })
-    }),
-    1
+    ],
+    2
   )
 }
 var staticRenderFns = []
@@ -75526,6 +75751,10 @@ var render = function() {
                   key: index,
                   staticClass:
                     "h-12 w-12 p-1 m-1 border-2 border-black-300 shadow",
+                  class: {
+                    "border-3 border-green-900":
+                      variant.id == _vm.selected_variant.id
+                  },
                   on: {
                     click: function($event) {
                       return _vm.selectVariant(index)

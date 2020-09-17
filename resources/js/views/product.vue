@@ -1,5 +1,4 @@
 <template>
-
     <div class="container mx-auto flex flex-col p-3">
         <div class="py-2">
             <h1 class="text-2xl font-bold font-italic">{{ product.name }}</h1>
@@ -17,8 +16,8 @@
                 <div class="flex-col">
                     <div class="flex">
                         <div @click="selectVariant(index)" class="h-12 w-12 p-1 m-1 border-2 border-black-300 shadow"
-                             v-for="( variant,index ) in product.variants" :key="index">
-                            <img :src="`/${JSON.parse(variant.photos)[0]}`" alt="" class="w-full h-full">
+                             v-for="( variant,index ) in product.variants" :key="index" :class="{'border-3 border-green-900' : variant.id == selected_variant.id}">
+                            <img :src="`/${JSON.parse(variant.photos)[0]}`" alt="" class="w-full h-full" >
                         </div>
                     </div>
                     <div>
@@ -76,7 +75,6 @@
                 </tab-component>
             </tabs-component>
         </div>
-
     </div>
 
 </template>

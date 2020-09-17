@@ -16,15 +16,18 @@ class OrderController extends Controller
     {
         return Auth::user()->orders->load('items.variant.product');
     }
+
     public function manageOrder($id)
     {
         return Auth::user()->orders->find($id)->load('orderStatus')->load('user')->load('items.variant.product');
     }
-    function cancelOrder($id,Request $request) {
+
+    function cancelOrder($id, Request $request)
+    {
         $data = $request->validate([
-            'reason' => ['required','string']
+            'reason' => ['required', 'string']
         ]);
-        $order =  Order::findOrFail($id);
+        $order = Order::findOrFail($id);
         $order->cancellation()->save(new Cancellation(['reason' => $data['reason']]));
     }
 
@@ -35,15 +38,12 @@ class OrderController extends Controller
         $sub_total = 0;
         $shipping_fee = 0;
 
-        foreach ($variants as $variant)
-        {
+        foreach ($variants as $variant) {
             $sub_total += $variant->pivot->sub_total;
         }
 
-        foreach ($variants as $variant)
-        {
-            if($variant->shipping_fee > $shipping_fee)
-            {
+        foreach ($variants as $variant) {
+            if ($variant->shipping_fee > $shipping_fee) {
                 $shipping_fee = $variant->shipping_fee;
             }
         }
@@ -59,16 +59,15 @@ class OrderController extends Controller
 
         $order->orderStatus()->save(new OrderStatus());
 
-        foreach ($variants as $variant)
-        {
+        foreach ($variants as $variant) {
             Item::create([
                 'order_id' => $order->id,
-                'variant_id' =>$variant->id,
+                'variant_id' => $variant->id,
                 'name' => $variant->name,
                 'SKU' => $variant->SKU,
                 'featured_photo' => $variant->photos,
-                'price' => $variant->special_price * $variant->carts->where('user_id',Auth::user()->id)->first()->pivot->quantity,
-                'quantity' => $variant->carts->where('user_id',Auth::user()->id)->first()->pivot->quantity,
+                'price' => $variant->special_price * $variant->carts->where('user_id', Auth::user()->id)->first()->pivot->quantity,
+                'quantity' => $variant->carts->where('user_id', Auth::user()->id)->first()->pivot->quantity,
             ]);
         }
     }
