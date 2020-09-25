@@ -1,5 +1,5 @@
 <template>
-    <section class="border border-gray-400 pb-5">
+    <section class="border border-gray-400 pb-5" style="z-index: 9999">
         <div class="nav-bar mt-4 container mx-auto">
             <div class="flex items-center justify-between">
                 <router-link to="/">
@@ -10,10 +10,11 @@
 
                 <div class="flex">
                     <router-link to="/cart">
-                        <div class="relative">
+                        <div class="relative" v-if="isAuthenticated">
                             <button class="rounded-icon"><i class="las la-shopping-bag"></i></button>
-                            <span class="block absolute top-0 right-0 text-sm font-bold text-red-900 "
-                                  v-if="isAuthenticated">{{ cart_counter }}</span>
+                            <span class="block absolute top-0 right-0 text-sm font-bold text-red-900">{{
+                                    cart_counter
+                                }}</span>
                         </div>
                     </router-link>
                     <div class="relative">
@@ -21,14 +22,22 @@
                             class="lar la-user"></i></button>
                         <div v-show="showAccMenu" class="bg-white absolute shadow-xl w-64 rounded" style="top: 100%">
                             <ul class="flex-col">
-                                <li @click="showAccMenu=false"><router-link class="px-2 py-3 border-b border-gray-300 hover:bg-gray-200 block" to="/orders">My Orders</router-link></li>
-                                <li @click="showAccMenu=false"><a href="#" class="px-2 py-3 border-b border-gray-300 hover:bg-gray-200 block">Password</a>
+                                <li @click="showAccMenu=false">
+                                    <router-link class="px-2 py-3 border-b border-gray-300 hover:bg-gray-200 block"
+                                                 to="/orders">My Orders
+                                    </router-link>
                                 </li>
-                                <li @click="showAccMenu=false"><a href="#" class="px-2 py-3 border-b border-gray-300 hover:bg-gray-200 block">Address
-                                    Book</a></li>
-                                <li @click="showAccMenu=false"><a href="#" class="px-2 py-3 border-b border-gray-300 hover:bg-gray-200 block">Update
+                                <li @click="showAccMenu=false"><a
+                                                                  class="px-2 py-3 border-b border-gray-300 hover:bg-gray-200 block">Password</a>
+                                </li>
+                                <li @click="showAccMenu=false"><router-link to="/addresses"
+                                                                  class="px-2 py-3 border-b border-gray-300 hover:bg-gray-200 block">Address
+                                    Book</router-link></li>
+                                <li @click="showAccMenu=false"><a
+                                                                  class="px-2 py-3 border-b border-gray-300 hover:bg-gray-200 block">Update
                                     Profile</a></li>
-                                <li @click="showAccMenu=false"><a href="#" @click="logout" class="px-2 py-3 hover:bg-gray-200 block">Sign Out</a>
+                                <li @click="showAccMenu=false"><a @click="logout"
+                                                                  class="px-2 py-3 hover:bg-gray-200 block">Sign Out</a>
                                 </li>
                             </ul>
                         </div>
@@ -64,9 +73,15 @@ export default {
             return this.$store.state.user != '';
         }
     },
+    watch: {
+        isAuthenticated(value) {
+            if (value) {
+                this.fetchCartCounter()
+            }
+        }
+    },
     mounted() {
-        this.fetchCartCounter();
-        this.eventBus.$on('updated-cart',() => {
+        this.eventBus.$on('updated-cart', () => {
             this.fetchCartCounter()
         })
     },
@@ -82,13 +97,14 @@ export default {
         },
         fetchCartCounter() {
             axios.get('/api/cart-counter')
-            .then(({data}) => {
-                this.cart_counter = data;
-            })
-            .catch((e) => {
-                console.log(e.message);
-            })
+                .then(({data}) => {
+                    this.cart_counter = data;
+                })
+                .catch((e) => {
+                    console.log(e.message);
+                })
         },
     }
 }
 </script>
+)

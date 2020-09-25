@@ -38,6 +38,7 @@ Vue.mixin({
         }
     }
 })
+
 let app;
 defineRouteGuard()
     .then(() => {

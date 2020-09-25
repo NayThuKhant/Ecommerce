@@ -18,6 +18,7 @@
         "kreait/laravel-firebase": "^2.2",
         "laravel/framework": "^7.24",
         "laravel/sanctum": "^2.5",
+        "laravel/socialite": "^5.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.1"
     },

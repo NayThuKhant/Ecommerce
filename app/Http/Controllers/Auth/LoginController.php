@@ -8,8 +8,8 @@ use App\Providers\RouteServiceProvider;
 use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
-use Firebase\Auth\Token\Exception\InvalidToken;
 use Kreait\Firebase\Auth;
+use Laravel\Socialite\Facades\Socialite;
 
 class LoginController extends Controller
 {
@@ -44,6 +44,8 @@ class LoginController extends Controller
         $this->auth = $auth;
     }
 
+
+
     public function firebaseLogin(Request $request)
     {
         $idToken = $request->idToken;
@@ -76,5 +78,12 @@ class LoginController extends Controller
         \Illuminate\Support\Facades\Auth::login($user);
         return response(['message' => 'Authenticated'], 200);
 
+    }
+    public function loginWithGithub() {
+        return Socialite::driver('github')->scopes(['email'])->redirect();
+    }
+    public function handleLoginWithGithub() {
+        $user = Socialite::driver('github')->user();
+        dd($user);
     }
 }

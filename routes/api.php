@@ -29,10 +29,20 @@ Route::namespace('API')->group(function () {
         Route::get('/cart/{variant}/get_current_quantity', 'CartController@getCurrentQuantityInCart');
         Route::post('/clear-cart','CartController@clear');
 
+        Route::post('/apply-voucher','OrderController@applyVoucher');
+        Route::post('/remove-voucher','OrderController@removeVoucher');
+
         Route::post('/order-now','OrderController@create');
         Route::get('orders','OrderController@index');
         Route::get('/orders/{id}/manage','OrderController@manageOrder');
         Route::post('/orders/{id}/cancel','OrderController@cancelOrder');
+
+        Route::get('/addresses', 'AddressController@index');
+        Route::post('/addresses/create','AddressController@create');
+
+
+        //For authorization purpose
+        Route::get('/order-ids','orderController@idIndex');
     });
 
     Route::get('/products', 'ProductController@index');
@@ -45,6 +55,7 @@ Route::namespace('API')->group(function () {
         return Product::with('variants', 'categories')->whereId($id)->first();
     });
 });
+
 
 
 

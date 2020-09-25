@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Address;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Post;
@@ -52,5 +53,8 @@ class User extends Authenticatable
     public function cart()
     {
         return $this->hasOne(Cart::class);
+    }
+    public function addresses() {
+        return $this->hasMany(Address::class);
     }
 }

@@ -40,7 +40,7 @@ export default {
 
 <style scoped>
     .is-active {
-        border-bottom: red 2px solid;
+        border-bottom: #ff0000 2px solid;
         color: red;
         }
 </style>

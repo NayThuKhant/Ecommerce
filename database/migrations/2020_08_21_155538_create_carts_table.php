@@ -17,6 +17,8 @@ class CreateCartsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
+            $table->float('discount')->default(0);
+            $table->string('voucher')->nullable();
         });
         Schema::create('cart_variant', function (Blueprint $table) {
             $table->foreignId('cart_id')->constrained()->cascadeOnDelete();

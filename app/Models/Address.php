@@ -21,6 +21,10 @@ class Address extends Model
         'region',
     ];
 
+    protected $appends = [
+        'full_address'
+    ];
+
     /**
      * The attributes that should be cast to native types.
      *
@@ -35,5 +39,12 @@ class Address extends Model
     public function user()
     {
         return $this->belongsTo(\App\Models\User::class);
+    }
+
+    public function getFullAddressAttribute() {
+        return
+            $this->address . '/' .
+            $this->township . '/' .
+            $this->city;
     }
 }

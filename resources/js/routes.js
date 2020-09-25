@@ -7,6 +7,9 @@ import cart from "./views/cart"
 import orders from "./views/orders";
 import manage_order from "./views/manage_order";
 import change_password from "./views/ProfileMgmt/change_password.vue";
+import notfound from "./views/notfound";
+import addresses from "./views/ProfileMgmt/addresses";
+import edit_address from "./views/ProfileMgmt/edit_address";
 
 const Routes = [
     {
@@ -48,6 +51,27 @@ const Routes = [
         path : '/orders/:id/manage',
         name : 'order.manage',
         component: manage_order,
+    },
+    {
+        path: '/change-password',
+        name : 'change-password',
+        component: change_password
+    },
+    {
+        path : '/addresses',
+        name : 'addresses',
+        component : addresses
+    },
+    {
+        path: '/addresses/:id/edit',
+        name : 'edit.address',
+        component : edit_address
+    },
+    {
+        path: '*',
+        name : 'notfound',
+        component: notfound
     }
+
 ]
 export default Routes

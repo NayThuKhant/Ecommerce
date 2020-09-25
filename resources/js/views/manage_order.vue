@@ -62,6 +62,10 @@
                         <span class="text-sm flex-1">Shipping fee</span>
                         <span class="text-sm flex-1 text-right">+ {{ order.shipping_fee }} MMK</span>
                     </div>
+                    <div class="container-fluid flex mb-2">
+                        <span class="text-sm flex-1">Discount</span>
+                        <span class="text-sm flex-1 text-right">- {{ order.discount }} MMK</span>
+                    </div>
                     <div class="container-fluid flex mt-2">
                         <span class="text-sm flex-1 font-bold">Total</span>
                         <span class="text-sm flex-1 font-bold text-right">= {{ order.total }} MMK</span>

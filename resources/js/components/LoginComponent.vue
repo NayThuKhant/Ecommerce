@@ -1,11 +1,9 @@
 <template>
-    <div class="container mx-auto">
-        <div class="w-full max-w-lg mt-6 mx-auto rounded-lg border border-gray-400 px-4 py-4">
-            <h5 class="uppercase tracking-wide text-gray-800 text-base font-bold mb-5 ">
-                Sign in / Register
-            </h5>
-            <div id="firebase-auth-container"></div>
-            <spinner-component/>
+    <div class="container mx-auto flex justify-center flex-col items-center" style="height: 400px">
+        <div class="flex flex-col p-5 bg-gray-100 rounded-lg shadow">
+            <a href="/login/github" class="flex items-center bg-gray-800 px-4 py-2 text-white text-sm rounded my-2"><i class="text-3xl mr-2 lab la-github"></i> sign in with github</a>
+            <a href="/login/facebook" class="flex items-center bg-blue-500 px-4 py-2 text-white text-sm rounded my-2"><i class="text-3xl mr-2 lab la-facebook"></i> sign in with facebook</a>
+            <a href="/login/google" class="flex items-center bg-red-400 px-4 py-2 text-white text-sm rounded my-2"><i class="text-3xl mr-2 lab la-google"></i> sign in with google</a>
         </div>
     </div>
 </template>

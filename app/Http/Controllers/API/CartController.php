@@ -14,7 +14,7 @@ class CartController extends Controller
 {
     public function index()
     {
-        return Auth::user()->cart->variants->load('product');
+        return Auth::user()->cart->load('variants.product');
     }
     public function addToCart(Variant $variant, Request $request)
     {

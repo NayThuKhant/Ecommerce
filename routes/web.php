@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/login/github','Auth\LoginController@loginWithGithub');
+Route::get('/login/github/redirect','Auth\LoginController@handleLoginWithGithub');
 
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 Route::post('/login-firebase', 'Auth\LoginController@firebaseLogin');

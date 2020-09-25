@@ -43,13 +43,22 @@ class OrderCrudController extends CrudController
             'label' => 'User Name',
             'entity' => 'user',
             'attribute' => 'name',
-            'model'=>'App\User'
+            'model' => 'App\User'
         ]);
         CRUD::column('payment_method');
         CRUD::column('subtotal');
         CRUD::column('shipping_fee');
         CRUD::column('discount');
         CRUD::column('total');
+
+        $order_status = [
+            'label' => 'Order Status',
+            'name' => 'final_status',
+            'type' => 'order_status',
+            'orderable' => true,
+        ];
+
+        $this->crud->addColumn($order_status);
         CRUD::column('created_at');
         /**
          * Columns can be defined using the fluent syntax or array syntax:
