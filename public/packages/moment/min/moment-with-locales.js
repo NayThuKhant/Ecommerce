@@ -780,7 +780,7 @@
 
     regexes = {};
 
-    function addRegexToken(token, regex, strictRegex) {
+    functionaddRegexToken(token, regex, strictRegex) {
         regexes[token] = isFunction(regex)
             ? regex
             : function (isStrict, localeData) {

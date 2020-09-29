@@ -21,7 +21,8 @@ class Order extends Model
         'shipping_fee',
         'discount',
         'total',
-        'user_id'
+        'user_id',
+        'address_id'
     ];
 
     /**
@@ -49,6 +50,9 @@ class Order extends Model
     public function items()
     {
         return $this->hasMany(\App\Models\Item::class);
+    }
+    public function address() {
+        return $this->belongsTo(Address::class);
     }
 
     public function orderStatus()
@@ -89,4 +93,6 @@ class Order extends Model
             return false;
         }
     }
+
+
 }

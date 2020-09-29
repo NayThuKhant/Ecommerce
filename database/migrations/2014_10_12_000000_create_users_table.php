@@ -16,11 +16,10 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email')->nullable();
+            $table->string('email');
             $table->string('phone')->nullable();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password')->nullable();
-            $table->string('firebase_uid')->nullable();
+            $table->string('provider');
+            $table->string('provider_id');
             $table->boolean('more_info_needed');
             $table->boolean('is_active');
             $table->rememberToken();

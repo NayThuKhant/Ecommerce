@@ -1,7 +1,7 @@
-
 const store = {
     state: {
         user: "",
+        order_ids : [],
         ready: false
     },
     mutations: {
@@ -13,6 +13,9 @@ const store = {
         },
         setCurrentUser(state, user) {
             state.user = user
+        },
+        setOrderIds(state, ids) {
+            state.order_ids = ids
         }
     }
 }

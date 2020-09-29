@@ -21,15 +21,16 @@ export default {
     },
     methods: {
         fetchCurrentUser() {
-            axios.get('/api/user')
-            .then(({data}) => {
-                this.$store.commit('setAsReady')
-                this.$store.commit('setCurrentUser', data)
-            })
-            .catch((error) => {
-                console.log(error.message)
-            })
-        }
+            axios.get('/user')
+                .then(({data}) => {
+                    this.$store.commit('setAsReady')
+                    this.$store.commit('setCurrentUser', data)
+                })
+                .catch((error) => {
+                    console.log(error.message)
+                })
+        },
+
     }
 }
 </script>
