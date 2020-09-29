@@ -1,5 +1,5 @@
 <template>
-    <section class="border border-gray-400 pb-5" style="z-index: 9999">
+    <section class="border border-gray-400 pb-5">
         <div class="nav-bar mt-4 container mx-auto">
             <div class="flex items-center justify-between">
                 <router-link to="/">

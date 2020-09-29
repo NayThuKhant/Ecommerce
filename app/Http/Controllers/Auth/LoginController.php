@@ -8,7 +8,7 @@ use App\Providers\RouteServiceProvider;
 use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
-use Kreait\Firebase\Auth;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
 class LoginController extends Controller
@@ -25,6 +25,7 @@ class LoginController extends Controller
     */
 
     use AuthenticatesUsers;
+
     private $auth;
     /**
      * Where to redirect users after login.
@@ -45,7 +46,6 @@ class LoginController extends Controller
     }
 
 
-
     public function firebaseLogin(Request $request)
     {
         $idToken = $request->idToken;
@@ -53,8 +53,7 @@ class LoginController extends Controller
             $verifiedIdToken = $this->auth->verifyIdToken($idToken);
         } catch (InvalidToken $e) {
             return response(['message' => 'Unauthorized - Invalid Key'], 422);
-        }
-        catch (\InvalidArgumentException $e) {
+        } catch (\InvalidArgumentException $e) {
             return response(['message' => 'Unauthorized - Invalid Key Format'], 422);
         }
         $uid = $verifiedIdToken->getClaim('sub');
@@ -71,7 +70,7 @@ class LoginController extends Controller
             ]
         );
 
-        if(!$user->cart){
+        if (!$user->cart) {
             $user->cart()->save(new Cart());
         }
 
@@ -79,11 +78,44 @@ class LoginController extends Controller
         return response(['message' => 'Authenticated'], 200);
 
     }
-    public function loginWithGithub() {
+
+    public function loginWithGithub()
+    {
         return Socialite::driver('github')->scopes(['email'])->redirect();
     }
-    public function handleLoginWithGithub() {
+
+    public function handleLoginWithGithub()
+    {
         $user = Socialite::driver('github')->user();
         dd($user);
+    }
+
+    public function loginWithProvider($provider)
+    {
+        return Socialite::driver($provider)->redirect();
+    }
+
+    public function handleLoginWithProvider($provider)
+    {
+
+        $user = Socialite::driver($provider)->user();
+
+        $user = User::firstOrCreate([
+            'email' => $user->email,
+            'provider' => $provider,
+        ],
+            [
+                'name' => $user->name,
+                'provider_id' => $user->id,
+                'more_info_needed' => true,
+                'is_active' => true,
+            ]
+        );
+
+        if (!$user->cart) {
+            $user->cart()->save(new Cart());
+        }
+        \Illuminate\Support\Facades\Auth::login($user);
+        return redirect('/');
     }
 }

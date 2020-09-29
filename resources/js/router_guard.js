@@ -6,7 +6,7 @@ let user, order_ids, beforeGuard, afterGuard;
 /**
  * Routes which need authentication
  */
-let authentication = ['cart', 'orders', 'order.manage','addresses','MoreInfoView','add-address'];
+let authentication = ['cart', 'orders', 'order.manage', 'addresses', 'MoreInfoView', 'add-address'];
 
 /**
  * Define guarded (auth needed) route name here.
@@ -15,7 +15,7 @@ let guarded = ['MoreInfoView',]
 
 async function getCurrentUser() {
     try {
-        let response = await axios.get('/api/user')
+        let response = await axios.get('/user')
         user = response.data
     } catch (e) {
         toastr.error(e.message, "Error")
@@ -42,12 +42,12 @@ async function defineRouteGuard() {
     }
 
 
+
     beforeGuard = (to, from, next) => {
         //Vue Progress Bar on each route enter
         if (app) {
             app.$Progress.start()
         }
-
 
 
         /**
@@ -63,12 +63,11 @@ async function defineRouteGuard() {
 
 
         /**
-        //  * User is authenticated but more info is not needed anymore.
-        //  */
+         //  * User is authenticated but more info is not needed anymore.
+         //  */
         else if (!user.more_info_needed && to.name === "MoreInfoView") {
             return next('/')
         }
-
 
 
         /**
@@ -76,12 +75,11 @@ async function defineRouteGuard() {
          */
         if (authentication.includes(to.name)) {
             if (user !== '') {
-               next()
+                next()
             } else {
-               return next('login')
+                return next('login')
             }
         }
-
 
 
         /**

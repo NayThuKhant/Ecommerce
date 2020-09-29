@@ -16,7 +16,6 @@ class CheckIfInfoNeeded
      */
     public function handle($request, Closure $next)
     {
-
         if ($request->path() == "finishing-up") {
             return $next($request);
         }
@@ -24,6 +23,7 @@ class CheckIfInfoNeeded
             if (Auth::user()->more_info_needed) {
                 return redirect('/finishing-up');
             }
+
         }
         return $next($request);
     }

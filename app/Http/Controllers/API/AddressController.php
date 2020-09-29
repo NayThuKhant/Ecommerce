@@ -19,7 +19,6 @@ class AddressController extends Controller
             'township' => [ 'required','string',],
             'phone' => [ 'required','numeric',],
             'city' => [ 'required','string',],
-            'region' => [ 'required','string',]
         ]);
 
         return $request->user()->addresses()->save(new Address([
@@ -28,8 +27,14 @@ class AddressController extends Controller
             'township' => $data['township'],
             'phone' => $data['phone'],
             'city' => $data['city'],
-            'region' => $data['region']
         ]));
-
+    }
+    public function destroy(Address $address,Request $request) {
+        if(count($request->user()->addresses) > 1) {
+            return $address->delete();
+        }
+        else {
+            return response('A user needs an addresss at least !', 422);
+        }
     }
 }

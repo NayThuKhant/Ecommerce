@@ -3,6 +3,7 @@
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,16 +40,17 @@ Route::namespace('API')->group(function () {
 
         Route::get('/addresses', 'AddressController@index');
         Route::post('/addresses/create','AddressController@create');
-
+        Route::post('/addresses/{address}/remove','AddressController@destroy');
 
         //For authorization purpose
-        Route::get('/order-ids','orderController@idIndex');
+        Route::get('/order-ids','OrderController@idIndex');
     });
 
+    Route::get('/user', 'UserController@getUser');
     Route::get('/products', 'ProductController@index');
     Route::get('search', 'ProductController@search');
     Route::get('products/{product}', 'ProductController@show');
-    Route::get('/user', 'UserController@getUser');
+
     Route::get('categories', 'CategoryController@index');
     Route::get('categories/{slug}', 'CategoryController@getProducts');
     Route::get('products/{product}/variants', function ($id) {

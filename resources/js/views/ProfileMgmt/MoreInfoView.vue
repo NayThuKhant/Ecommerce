@@ -2,7 +2,7 @@
     <div>
         <section class="heading bg-gray-300">
             <div class="container mx-auto heading py-6">
-                <h3 class="font-bold text-3xl p-0">You are on the way!</h3>
+                <h3 class="font-bold text-2xl p-0">You are on the way!</h3>
                 <p class="text-lg mt-2">We need some more info to complete your account sign up.</p>
             </div>
         </section>
@@ -46,6 +46,62 @@
                             class="form-input"
                             id="phone" type="number" placeholder="0923456789" v-model="formData.phone">
                     </div>
+
+                    <h5 class="uppercase tracking-wide text-gray-800 text-base font-bold mb-5 ">
+                        Address Information
+                    </h5>
+
+                    <div class="form-group w-full">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                               for="address_name">
+                            Address Name <span class="text-xs text-red-500">*</span>
+                        </label>
+                        <input
+                            class="form-input"
+                            id="address_name" placeholder="Home" v-model="formData.address_name">
+                    </div>
+
+                    <div class="form-group w-full">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                               for="address_phone">
+                            Address Phone <span class="text-xs text-red-500">*</span>
+                        </label>
+                        <input
+                            class="form-input"
+                            id="address_phone" type="number" placeholder="0923456789" v-model="formData.address_phone">
+                    </div>
+
+                    <div class="form-group w-full">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                               for="address">
+                            Address <span class="text-xs text-red-500">*</span>
+                        </label>
+                        <input
+                            class="form-input"
+                            id="address"  placeholder="N0.200 Thunander 12th" v-model="formData.address">
+                    </div>
+
+                    <div class="form-group w-full">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                               for="township">
+                            Township <span class="text-xs text-red-500">*</span>
+                        </label>
+                        <input
+                            class="form-input"
+                            id="township"  placeholder="Northokkalapa" v-model="formData.township">
+                    </div>
+
+                    <div class="form-group w-full">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                               for="city">
+                            City <span class="text-xs text-red-500">*</span>
+                        </label>
+                        <input
+                            class="form-input"
+                            id="city"  placeholder="Yangon" v-model="formData.city">
+                    </div>
+
+
                     <button type="submit" class="btn-full btn-blue">
                         Save & Continue
                     </button>
@@ -86,7 +142,12 @@ export default {
             axios.post('/api/update-info', {
                 name: this.formData.name,
                 email: this.formData.email,
-                phone: this.formData.phone
+                phone: this.formData.phone,
+                address_name : this.formData.address_name,
+                address_phone : this.formData.address_phone,
+                address : this.formData.address_phone,
+                township : this.formData.township,
+                city : this.formData.city,
             })
             .then(() => {
                 toastr.success('Profile updated successfully', 'Success')

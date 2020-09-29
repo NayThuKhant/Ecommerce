@@ -166,6 +166,16 @@
                     </div>
                 </div>
             </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="d-block">Address : {{ $order->address->full_address  }}</span>
+                        <span class="d-block">Phone : {{ $order->address->phone  }}</span>
+                    </div>
+                </div>
+            </div>
+
             <div class="card">
                 <div class="card-header">
                     <div class="card-title mb-0">

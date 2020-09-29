@@ -21,7 +21,7 @@ export default {
     },
     methods: {
         fetchCurrentUser() {
-            axios.get('/api/user')
+            axios.get('/user')
                 .then(({data}) => {
                     this.$store.commit('setAsReady')
                     this.$store.commit('setCurrentUser', data)

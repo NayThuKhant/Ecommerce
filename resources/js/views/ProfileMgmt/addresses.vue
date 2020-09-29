@@ -7,24 +7,27 @@
             </button>
         </div>
 
-        <div :class="{ 'opacity-25' : show_add_address }"
-            class="w-full flex lg:text-sm md:text-sm sm:text-xs text-xs px-2 py-4 border border-1 border-black-900 font-bold bg-gray-400">
-            <div class="flex-1 flex" >
-                <span class="w-1/4">Name</span>
-                <span class="w-2/4">Full Address</span>
-                <span class="w-1/4">Phone</span>
+        <div class="flex flex-wrap text-xs" :class="{ 'opacity-25' : show_add_address }">
+            <div class="w-1/4 p-3" v-for="(address,index) in addresses" :key="index">
+                <div class="w-full rounded-lg bg-red-500 flex flex-col overflow-hidden">
+                    <div class="flex p-1 bg-red-400 justify-between items-center">
+                        <span class="font-bold"> {{ address.full_name }} </span>
+                        <i class="las la-trash" v-if="addresses.length > 1" @click="confirmRemoveAddress(address.id)"></i>
+                    </div>
+                    <div class="flex flex-col p-2">
+                        <div class="flex my-2 items-center">
+                            <i class="las la-map-marker-alt font-bold mr-2"></i>
+                            <span class="flex-1">{{ address.full_address }}</span>
+                        </div>
+                        <div class="flex my-2 items-center">
+                            <i class="las la-phone font-bold mr-2"></i>
+                            <span class="flex-1">{{ address.phone }}</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <span>Edit</span>
         </div>
-        <div v-for="(address,index) in addresses" :key="index" :class="{ 'opacity-25' : show_add_address }"
-             class="w-full flex lg:text-sm md:text-sm sm:text-xs text-xs px-2 py-4 hover:bg-gray-200 border-b-2 border-black-900">
-            <div class="flex-1 flex">
-                <span class="w-1/4">{{ address.full_name }}</span>
-                <span class="w-2/4">{{ address.full_address }}</span>
-                <span class="w-1/4">{{ address.phone }}</span>
-            </div>
-            <span>Edit</span>
-        </div>
+
 
         <div class="absolute bg-gray-300 edit-address flex flex-col" v-if="show_add_address">
             <div class="bg-orange-400 py-2 mb-2 px-5">
@@ -64,13 +67,6 @@
                     </section>
                 </div>
                 <div class="flex mb-3">
-                    <section class="flex flex-col flex-1 pr-2">
-                        <label for="region" class="mb-2 text-sm font-bold">Region</label>
-                        <input name="region" v-model="form.region" id="region" type="text"
-                               class="bg-gray-100 outline-none py-1 px-3">
-                        <span class="text-xs text-red-500" v-if="form.errors.has('region')"
-                              v-text="form.errors.get('region')"></span>
-                    </section>
                     <section class="flex flex-col flex-1 pl-2">
                         <label for="phone" class="mb-2 text-sm font-bold">Phone</label>
                         <input name="phone" v-model="form.phone" id="phone" type="number"
@@ -81,15 +77,17 @@
                 </div>
                 <div class="flex mt-3">
                     <section class="flex flex-1">
-                        <button type="submit" class="btn-full select-none bg-green-500 flex-1 mx-2" :class="form.errors.any() ? 'opacity-50' : ''"
+                        <button type="submit" class="btn-full select-none bg-green-500 flex-1 mx-2"
+                                :class="form.errors.any() ? 'opacity-50' : ''"
                                 :disabled="form.errors.any()">Save Address
                         </button>
-                        <button type="button" class="btn-full select-none bg-red-500 flex-1 mx-2" @click="cancelAddAddress">Cancel</button>
+                        <button type="button" class="btn-full select-none bg-red-500 flex-1 mx-2"
+                                @click="cancelAddAddress">Cancel
+                        </button>
                     </section>
                 </div>
             </form>
         </div>
-
     </div>
 </template>
 
@@ -299,7 +297,7 @@ export default {
     data() {
         return {
             addresses: [],
-            show_add_address : false,
+            show_add_address: false,
 
             form: new Form({
                 name: '',
@@ -321,6 +319,7 @@ export default {
             axios.get('/api/addresses')
                 .then(({data}) => {
                     this.addresses = data
+                    console.log(data)
                 })
                 .catch((e) => {
                     toastr.error(e.message, 'Error')
@@ -339,9 +338,38 @@ export default {
         },
         cancelAddAddress() {
             this.show_add_address = false
-            if(this.form.errors.any()) {
+            if (this.form.errors.any()) {
                 this.form.errors.clear()
             }
+        },
+        confirmRemoveAddress(id) {
+            this.$swal({
+                icon: 'info',
+                title: 'Are you sure to remove this address ?',
+                showCancelButton: true,
+                confirmButtonText: 'Remove',
+                cancelButtonText: 'Cancel',
+                showCloseButton: true,
+                showLoaderOnConfirm: true
+            })
+            .then(result => {
+                if(result.value) {
+                    this.removeAddress(id)
+                }
+                else {
+                    this.$swal('Cancel', 'Address has not been removed', 'info')
+                }
+            })
+        },
+        removeAddress(id) {
+            axios.post(`/api/addresses/${id}/remove`)
+            .then(() => {
+                this.fetchAddresses()
+                toastr.success('successfully removed','Success')
+            })
+            .catch((e) => {
+                console.log(e.message)
+            })
         }
     }
 

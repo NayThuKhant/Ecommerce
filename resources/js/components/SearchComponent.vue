@@ -1,5 +1,5 @@
 <template>
-    <div class="search w-2/5 flex relative" style="height: 2.25rem">
+    <div class="search w-2/5 flex relative lg:h-8">
         <input type="text"
                class="border border-gray-400 text-gray-800 placeholder-gray-700 bg-gray-100 font-semibold rounded-l w-full text-sm appearance-none focus:outline-none focus:shadow-outline px-4 py-2 leading-tight"
                placeholder="Search"

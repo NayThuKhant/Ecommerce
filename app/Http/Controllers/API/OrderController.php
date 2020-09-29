@@ -43,7 +43,7 @@ class OrderController extends Controller
 
         $order = Order::create([
             'user_id' => Auth::user()->id,
-            'payment_method' => $request->payment_method,
+            'address_id' => $request->address_id,
             'subtotal' => $sub_total,
             'shipping_fee' => $shipping_fee,
             'discount' => $cart->discount,
@@ -117,6 +117,11 @@ class OrderController extends Controller
     //For authorization purpose
     public function idIndex()
     {
-        return Auth::user()->orders->pluck('id');
+        if(Auth::check()) {
+            return Auth::user()->orders->pluck('id');
+        }
+        else {
+            return [];
+        }
     }
 }
